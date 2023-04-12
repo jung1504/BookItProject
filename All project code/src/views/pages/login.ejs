@@ -1,0 +1,27 @@
+<%- include ('../partials/header') %> <%- include ('../partials/menu') %>
+
+<main>
+  <div class="container">
+    <!-- THE REST OF YOUR HTML CODE GOES HERE -->
+        <!-- FORM CODE -->
+        <form action="/login" method="POST">
+            <div class="mb-3">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" />
+            </div>
+            <div class="mb-3">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" />
+            </div>
+            <!-- BUTTON CODE -->
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+            <!-- END BUTTON CODE -->
+        </form>
+        <!-- END FORM CODE -->
+    <!-- END ADDED HTML CODE -->
+  </div>
+</main>
+
+<%- include ('../partials/footer') %>
