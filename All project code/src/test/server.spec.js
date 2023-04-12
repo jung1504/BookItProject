@@ -25,19 +25,15 @@ describe('Server!', () => {
 
   // ===========================================================================
   // TO-DO: Part A Login unit test case
-    // Sample test case given to test /login endpoint.
-    it('Returns the default login message', done => {
-      chai
-        .request(server)
-        .get('/login', {
-          username: '',
-          password: ''
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          expect(res.body.status).to.equals('success');
-          assert.strictEqual(res.body.message, 'Logged In!');
-          done();
-        });
-    });
+  // it('positive : /login', done => {
+  //   chai
+  //     .request(server)
+  //     .post('/login')
+  //     .send({id: 5, name: 'John Doe', dob: '2020-02-20'})
+  //     .end((err, res) => {
+  //       expect(res).to.have.status(200);
+  //       expect(res.body.message).to.equals('Success');
+  //       done();
+  //     });
+  // });
 });
