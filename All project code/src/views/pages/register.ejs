@@ -1,0 +1,34 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+  <div class="container">
+    <!-- THE REST OF YOUR HTML CODE GOES HERE -->
+
+    <h1><centre>Register</centre></h1>
+        <!-- FORM CODE -->
+        <form action="/register" method="POST">
+            <div class="mb-3">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" />
+            </div>
+            <div class="mb-3">
+                <label for="password">Password:</label>
+                <input type="text" id="password" name="password" />
+            </div>
+            <!-- BUTTON CODE -->
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+            <!-- END BUTTON CODE -->
+        </form>
+        <!-- END FORM CODE -->
+
+
+
+
+    <!-- END ADDED HTML CODE -->
+  </div>
+</main>
+
+<%- include ('../partials/footer') %>
