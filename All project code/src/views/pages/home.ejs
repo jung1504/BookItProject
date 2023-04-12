@@ -1,0 +1,26 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+  <% if (locals.message) { %>
+    <div
+      class="alert alert-<%- locals.error ? 'danger' : 'success' %>"
+      role="alert"
+    >
+      <%= message %>
+    </div>
+    <% } %>
+    <div class="container">
+        <h1>Home Page</h1>
+    </div>
+  
+  <div class="container">
+    <footer id="footer" class="text-center fixed-bottom bg-light">
+      <div class="row">
+        <a href="https://www.linkedin.com/in/carsongross/" class="nav-link p-0 text-muted">Linkedin</a>
+      </div>
+    </footer>
+  </div>
+</main>
+
+<%- include ('../partials/footer') %>

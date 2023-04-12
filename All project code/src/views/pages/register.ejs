@@ -2,6 +2,13 @@
 <%- include ('../partials/menu') %>
 
 <main>
+    <% if (locals.message) { %>
+        <div
+          class="alert alert-<%- locals.error ? 'danger' : 'success' %>"
+          role="alert">
+          <%= message %>
+        </div>
+        <% } %>
   <div class="container">
     <!-- THE REST OF YOUR HTML CODE GOES HERE -->
 
@@ -14,7 +21,7 @@
             </div>
             <div class="mb-3">
                 <label for="password">Password:</label>
-                <input type="text" id="password" name="password" />
+                <input type="password" id="password" name="password" />
             </div>
             <!-- BUTTON CODE -->
             <div class="mb-3">
@@ -23,11 +30,12 @@
             <!-- END BUTTON CODE -->
         </form>
         <!-- END FORM CODE -->
-
-
-
-
     <!-- END ADDED HTML CODE -->
+  </div>
+  <div class="container">
+  <form action="/login" method="GET">
+    <button type="submit" class="btn mt-3">Login Instead</button>
+  </form>
   </div>
 </main>
 

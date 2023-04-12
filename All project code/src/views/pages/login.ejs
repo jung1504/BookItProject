@@ -1,17 +1,25 @@
 <%- include ('../partials/header') %> <%- include ('../partials/menu') %>
 
 <main>
+    <% if (locals.message) { %>
+        <div
+          class="alert alert-<%- locals.error ? 'danger' : 'success' %>"
+          role="alert">
+          <%= message %>
+        </div>
+        <% } %>
   <div class="container">
     <!-- THE REST OF YOUR HTML CODE GOES HERE -->
         <!-- FORM CODE -->
+        <h1><centre>Login</centre></h1>
         <form action="/login" method="POST">
             <div class="mb-3">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" />
+                <label for="username">Username:</label>
+                <input type="email" id="username" name="username" />
             </div>
             <div class="mb-3">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" />
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" />
             </div>
             <!-- BUTTON CODE -->
             <div class="mb-3">
@@ -21,6 +29,11 @@
         </form>
         <!-- END FORM CODE -->
     <!-- END ADDED HTML CODE -->
+  </div>
+  <div class="container">
+    <form action="/register" method="GET">
+      <button type="submit" class="btn mt-3">Register Instead</button>
+    </form>
   </div>
 </main>
 

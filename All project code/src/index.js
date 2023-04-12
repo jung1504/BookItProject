@@ -68,6 +68,11 @@ app.get('/', (req, res) => {
     res.redirect("/login");
 });
 
+// Login GET route: '/home'
+app.get('/home', (req,res) => {
+  res.render("pages/home");
+});
+
 // Register GET route: '/register'
 app.get('/register', (req,res) => {
     res.render("pages/register");
