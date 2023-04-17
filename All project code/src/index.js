@@ -84,21 +84,18 @@ app.get('/register', (req,res) => {
 
 // Register POST route: '/register'
 app.post('/register', async (req, res) => {
-    //hash the password using bcrypt library
-    const hash = await bcrypt.hash(req.body.password, 10);
-  
-    // To-DO: Insert username and hashed password into 'users' table
-    const query = "INSERT INTO users(username, password) VALUES ($1, $2);";
-    db.any(query, [
-        req.body.username,
-        hash
-    ])
-        .then(function (data) {
-            res.redirect("/login");
-        })
-        .catch(function (err) {
-            res.redirect("/register");
-        });
+  const email = req.body.email;
+  const hash = await bcrypt.hash(req.body.password, 10);
+  const query = `insert into users (email, password) values ('${email}','${hash}')  returning *`;
+  // To-DO: Insert username and hashed password into 'users' table
+  try{
+    let temp = await db.one(query);
+    res.redirect('/login');
+  }
+  catch(err){
+    console.log(err);
+    res.redirect('/register');
+    }
   });
 
 // Login GET route: '/login'
@@ -106,38 +103,36 @@ app.get('/login', (req,res) => {
     res.render("pages/login");
 });
 
-// Login POST route: '/login'
-app.post('/login', (req, res) => {
-    // IN PROGRESS
-    const query = `SELECT password FROM users WHERE username = $1;`;
-    db.one(query,[req.body.username])
-    .then(async function (user) {
-        if (user) {
-          console.log(user.password)
-          // check if password from request matches with password in DB
-          const match = await bcrypt.compare(req.body.password, user.password);
-          //save user details in session like in lab 8
-          console.log(match)
-          if (match) {
-            req.session.user = user;
-            req.session.save();
-            res.redirect("/home");
-          }
-          else {
-            res.render("pages/login", {
-              error: true,
-              message: "Incorrect username or password.",
-            });
-          }
-        } else {
-          res.redirect("/register");
-        }
-      })
-      .catch(function (err) {
+
+
+app.post('/login', async function (req, res) {
+  const query = 'SELECT * FROM users WHERE email = $1;'; 
+  let user = await db.one(query, [
+    req.body.email,
+    req.body.password
+  ])
+  // check if password from request matches with password in DB
+  try{
+    const match = await bcrypt.compare(req.body.password, user.password);
+      if(match == false)
+      {
         res.render("pages/login", {
           error: true,
+          message: "Incorrect email or password.",
         });
-      });
+      }
+      else{
+        //save user details in session like in lab 8
+        req.session.user = user;
+        req.session.save();
+        res.redirect('/home'); 
+        //change login to home page when created
+      }
+  }
+    catch(err)
+    {
+      console.log(err);
+    }
 });
 
 // Authentication Middleware.
