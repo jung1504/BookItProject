@@ -1,0 +1,18 @@
+API: https://openlibrary.org/dev/docs/api/books
+
+The Open Library API provides access to information about books in its catalog. 
+To look up a book we can use https://openlibrary.org/search.json?q=${search}
+    Here, {$search} can be the book title or isbn number
+    This search will create a json file of all the resulting books with the inputted title or isbn
+
+ISBN:
+An ISBN is a unique identifier that is used to track and manage books. 
+
+This API call will return all instances that match the inputted string (including articles, audiobooks, movies, etc)
+and so it is necessary to parse through the resulting json file and fetch all the info that is needed
+
+This API does not provide information such as page number, weight, etc but it does provide author, image, publish date.
+It is possible to get other information such as page number but you will have to use https://openlibrary.org/api/books
+for example https://openlibrary.org/api/books?bibkeys=ISBN:9780980200447&jscmd=details&format=json will provide all information about the book "slow reading"
+However, not all ISBN can work with this api call and some calls may result in an error or only provide limited information.
+
