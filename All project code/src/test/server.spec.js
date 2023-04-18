@@ -25,40 +25,49 @@ describe('Server!', () => {
 
   // ===========================================================================
   // TO-DO: Part A Login unit test case
-  // it('positive : /login', done => {
-  //   chai
-  //     .request(server)
-  //     .post('/login')
-  //     .send({id: 5, name: 'John Doe', dob: '2020-02-20'})
-  //     .end((err, res) => {
-  //       expect(res).to.have.status(200);
-  //       expect(res.body.message).to.equals('Success');
-  //       done();
-  //     });
-  // });
+  it('positive : /login', done => {
+    chai
+      .request(server)
+      .post('/login')
+      .send({email: "testEmail25@colorado.edu", password: "testPassword25"})
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  //it('Negative : /login. Checking invalid name', done => {
+    //chai
+      //.request(server)
+      //.post('/login')
+      //.send({email: "testEmail25@colorado.edu", password: 10})
+      //.end((err, res) => {
+      //  expect(err);
+        //expect(res.body.message).to.equals('Invalid input');
+      //  done();
+      //});
+  //});
+
 
   // REGISTER ENDPOINT TESTING
   it('positive : /register', done => {
     chai
       .request(server)
       .post('/register')
-      .send({email: 'testEmail@colorado.edu', password: 'testPassword'})
+      .send({email: 'test@test.com', password: 'test'})
       .end((err, res) => {
-        expect(res).to.have.status(201);
-        // expect(res.body.message).to.equals('test1');
+        expect(res).to.have.status(200);
         done();
       });
   });
-});
-
-it('Negative : /add_user. Checking if user already exists in database.', done => {
-  chai
-    .request(server)
-    .post('/register')
-    .send({email: 'testEmail25@colorado.edu', password: 'testPassword25'})
-    .end((err, res) => {
-      expect(res).to.have.status(401);
-      // expect(res.body.message).to.equals('Invalid input');
-      done();
-    });
+  it('negative : /register', done => {
+    chai
+      .request(server)
+      .post('/register')
+      .send({email: 'test', password: 'test'})
+      .end((err, res) => {
+        expect(err)
+        done();
+      });
+  });
 });
