@@ -37,14 +37,15 @@ describe('Server!', () => {
   //     });
   // });
 
+  // REGISTER ENDPOINT TESTING
   it('positive : /register', done => {
     chai
       .request(server)
       .post('/register')
-      .send({email: 'test@test.com', password: 'test'})
+      .send({email: 'testEmail@colorado.edu', password: 'testPassword'})
       .end((err, res) => {
         expect(res).to.have.status(201);
-        expect(res.body.message).to.equals('Success');
+        // expect(res.body.message).to.equals('test1');
         done();
       });
   });

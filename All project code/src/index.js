@@ -90,7 +90,7 @@ app.post('/register', async (req, res) => {
   // To-DO: Insert username and hashed password into 'users' table
   try{
     let temp = await db.one(query);
-    return res.status(201).send({message: 'Success'});
+    // return res.status(201).send({message: 'test1'});
     res.redirect(201, 'login');
   }
   catch(err){
