@@ -82,22 +82,26 @@ app.get('/register', (req,res) => {
     res.render("pages/register");
 });
 
-// Register POST route: '/register'
+// Register POST
 app.post('/register', async (req, res) => {
-  const email = req.body.email;
+  //hash the password using bcrypt library
   const hash = await bcrypt.hash(req.body.password, 10);
-  const query = `insert into users (email, password) values ('${email}','${hash}')  returning *`;
-  // To-DO: Insert username and hashed password into 'users' table
-  try{
-    let temp = await db.one(query);
-    // return res.status(201).send({message: 'test1'});
-    res.redirect(201, 'pages/login');
-  }
-  catch(err){
-    console.log(err);
-    res.redirect(401, 'pages/register');
-    }
+
+  const query = `INSERT INTO users (email, password) VALUES ($1, $2);`;
+  await db.any(query, [
+      req.body.email,
+      hash,
+  ])
+  .then(function (data) {
+      res.redirect('login')
+  })
+  .catch(function (err) {
+    // This could just be res.redirect('register') and it would work the same
+      res.render("pages/login", { message: "Incorrect username or password", }, function(err, html) {
+        res.send('Error');
+      });
   });
+});
 
 // Login GET route: '/login'
 app.get('/login', (req,res) => {
@@ -133,6 +137,7 @@ app.post('/login', async function (req, res) {
     catch(err)
     {
       console.log(err);
+      return res.send({message: 'Error'});
     }
 });
 
