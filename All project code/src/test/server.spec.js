@@ -46,4 +46,25 @@ describe('Server!', () => {
         done();
       });
   });
+
+  it('positive : /login', done => {
+    chai
+      .request(server)
+      .post('/login')
+      .send({email: 'test@test.com', password: 'test'})
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+  it('negative : /login', done => {
+    chai
+      .request(server)
+      .post('/login')
+      .send({email: 'test', password: 'test'})
+      .end((err, res) => {
+        expect(err)
+        done();
+      });
+  });
 });
