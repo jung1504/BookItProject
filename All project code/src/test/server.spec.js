@@ -36,4 +36,29 @@ describe('Server!', () => {
   //       done();
   //     });
   // });
+
+  // REGISTER ENDPOINT TESTING
+  it('positive : /register', done => {
+    chai
+      .request(server)
+      .post('/register')
+      .send({email: 'testEmail@colorado.edu', password: 'testPassword'})
+      .end((err, res) => {
+        expect(res).to.have.status(201);
+        // expect(res.body.message).to.equals('test1');
+        done();
+      });
+  });
+});
+
+it('Negative : /add_user. Checking if user already exists in database.', done => {
+  chai
+    .request(server)
+    .post('/register')
+    .send({email: 'testEmail25@colorado.edu', password: 'testPassword25'})
+    .end((err, res) => {
+      expect(res).to.have.status(401);
+      // expect(res.body.message).to.equals('Invalid input');
+      done();
+    });
 });
