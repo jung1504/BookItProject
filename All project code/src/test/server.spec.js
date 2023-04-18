@@ -50,3 +50,16 @@ describe('Server!', () => {
       });
   });
 });
+
+//We are checking POST /add_user API by passing the user info in in incorrect manner (name cannot be an integer). This test case should pass and return a status 200 along with a "Invalid input" message.
+it('Negative : /add_user. Checking if user already exists in database.', done => {
+  chai
+    .request(server)
+    .post('/register')
+    .send({email: 'testEmail25@colorado.edu', password: 'testPassword25'})
+    .end((err, res) => {
+      expect(res).to.have.status(401);
+      // expect(res.body.message).to.equals('Invalid input');
+      done();
+    });
+});

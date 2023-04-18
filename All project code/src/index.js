@@ -91,11 +91,11 @@ app.post('/register', async (req, res) => {
   try{
     let temp = await db.one(query);
     // return res.status(201).send({message: 'test1'});
-    res.redirect(201, 'login');
+    res.redirect(201, 'pages/login');
   }
   catch(err){
     console.log(err);
-    res.redirect('pages/register');
+    res.redirect(401, 'pages/register');
     }
   });
 
