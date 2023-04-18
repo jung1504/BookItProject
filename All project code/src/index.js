@@ -105,7 +105,7 @@ app.get('/login', (req,res) => {
 });
 
 
-
+// fixed commit 
 app.post('/login', async function (req, res) {
   const query = 'SELECT * FROM users WHERE email = $1;'; 
   let user = await db.one(query, [
