@@ -171,6 +171,28 @@ app.get("/logout", (req, res) => {
   });
 });
 
+
+app.get("/reviews", (req, res) => {
+  const query = `SELECT * FROM reviews`;
+  db.any(query)
+    .then(data => {
+      res.render("pages/reviews", {
+        data
+      });
+    })
+    .catch(error => {
+      res.render("pages/reviews", {
+        data: [],
+        error: true,
+        message: "Reviews render failed."
+      })
+    });
+});
+
+
+
+
+
 // *****************************************************
 // <!-- Section 5 : Start Server-->
 // *****************************************************
