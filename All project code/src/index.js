@@ -101,10 +101,10 @@ app.post('/register', async (req, res) => {
       res.redirect('login')
   })
   .catch(function (err) {
-    // This could just be res.redirect('register') and it would work the same
-      res.render("pages/login", { message: "Error Registering", }, function(err, html) {
-        res.send('Error');
-      });
+    res.render('pages/login', {
+      error: true,
+      message: "Error registering user",
+    });
   });
 });
 
