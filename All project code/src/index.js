@@ -57,6 +57,11 @@ app.use(
   })
 );
 
+const user = {
+  username: undefined,
+  password: undefined,
+};
+
 // *****************************************************
 // <!-- Section 4 : API Routes -->
 // *****************************************************
@@ -97,7 +102,7 @@ app.post('/register', async (req, res) => {
   })
   .catch(function (err) {
     // This could just be res.redirect('register') and it would work the same
-      res.render("pages/login", { message: "Incorrect username or password", }, function(err, html) {
+      res.render("pages/login", { message: "Error Registering", }, function(err, html) {
         res.send('Error');
       });
   });
@@ -109,36 +114,39 @@ app.get('/login', (req,res) => {
 });
 
 
-// fixed commit 
-app.post('/login', async function (req, res) {
+// Login submission
+app.post("/login", async (req, res) => {
+  const email = req.body.email;
   const query = 'SELECT * FROM users WHERE email = $1;'; 
-  let user = await db.one(query, [
-    req.body.email,
-    req.body.password
-  ])
+  const values = [email];
+
+  // get the student_id based on the emailid
+  await db.one(query, values)
+    .then((data) => {
+      user.email = data.email;
+      user.password = data.password
+    })
+    .catch((err) => {
+      console.log(err);
+      res.render('pages/login', {
+        error: true,
+        message: "Incorrect username or password",
+      });
+    });
   // check if password from request matches with password in DB
-  try{
+  if (user.password) {
     const match = await bcrypt.compare(req.body.password, user.password);
-      if(match == false)
-      {
-        res.render("pages/login", {
-          error: true,
-          message: "Incorrect email or password.",
-        });
-      }
-      else{
-        //save user details in session like in lab 8
+    if (match) {
         req.session.user = user;
         req.session.save();
-        res.redirect('/home'); 
-        //change login to home page when created
-      }
-  }
-    catch(err)
-    {
-      console.log(err);
-      return res.send({message: 'Error'});
-    }
+        res.redirect('home');
+    } else {
+        res.render('pages/login', {
+            error: true,
+            message: "Incorrect username or password",
+        });
+    };
+  };
 });
 
 // Authentication Middleware.
@@ -155,6 +163,8 @@ app.use(auth);
 
 
 app.get("/logout", (req, res) => {
+  user.username = undefined;
+  user.password = undefined;
   req.session.destroy();
   res.render("pages/login", {
     message: "Logged out successfully."
