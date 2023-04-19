@@ -14,10 +14,38 @@
         <h1>Home Page</h1>
     </div>
   
+    <div id="books" class="container">
+      <div class="row">
+        <% books.slice(0, 5).forEach(book => { %>
+          <div class="col-sm mt-2">
+            <div class="card" style="width: 12rem;">
+              <div class="card-body text-center">
+                <img src="<%- book.formats['image/jpeg'] %>" class="card-img-top" alt="No image for this book" style="height:250px">
+                    <h4><%= book.title %></h4>
+                    <p><%= book.authors[0].name %></p>
+                </div>
+              </div>
+          </div>
+      <% }) %>
+      </div>
+      <div class="row">
+        <% books.slice(5, 10).forEach(book => { %>
+          <div class="col-sm mt-2">
+            <div class="card" style="width: 12rem;">
+              <div class="card-body text-center">
+                <img src="<%- book.formats['image/jpeg'] %>" class="card-img-top" alt="No image for this book">
+                    <h4><%= book.title %></h4>
+                    <p><%= book.authors[0].name %></p>
+                </div>
+              </div>
+          </div>
+      <% }) %>
+      </div>
+    </div>
+
   <div class="container">
     <footer id="footer" class="text-center fixed-bottom bg-light">
       <div class="row">
-        <a href="https://www.linkedin.com/in/carsongross/" class="nav-link p-0 text-muted">Linkedin</a>
       </div>
     </footer>
   </div>
