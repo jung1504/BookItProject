@@ -1,0 +1,63 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<div class="container">
+    <h1>REVIEWS</h1>
+    <!-- Modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_modal" data-bs-whatever="@mdo">modo test</button>
+      <div class="modal fade" id="create_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title fs-5" id="exampleModalLabel">New Review</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3" id="reviewer_name">
+                  <label for="event_name" class="form-label">Reviewer Name: </label>
+                  <input type="text" class="form-control">
+                  </div>
+                <div class="mb-3" id="book_name">
+                  <label for="event_name" class="form-label">Book: </label>
+                  <input type="text" class="form-control">
+                  </div>
+                  <div class="mb-3" id="author">
+                    <label for="event_name" class="form-label">Author: </label>
+                    <input type="text" class="form-control">
+                    </div>
+                  <div class="mb-3" id="isbn">
+                    <label for="event_name" class="form-label">ISBN: </label>
+                    <input type="text" class="form-control">
+                    </div>
+                  <div class="mb-3" id="email">
+                    <label class="form-label">Email: </label>
+                    <input placeholder="1234@colorado.edu" type="url" class="form-control">
+                    </div>
+                    <div class="mb-3" id="date">
+                      <label for="date">Date</label>
+                      <input placeholder="MM/DD/YYYY" type="date" class="form-control">
+                    </div>
+                  <div class="mb-3" id="review">
+                    <label for="event_name" class="form-label">Review: </label>
+                        <div class="form-group">
+                          <input type="text" size="50" width="200px">
+                      </div>
+                    </div>
+                
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close_modal"> Close</button>
+              <button id="submit_button" class="btn btn-primary" >
+                Create Review
+              </button>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+
+
+<%- include ('../partials/footer') %>

@@ -12,5 +12,8 @@ CREATE TABLE reviews(
     rating DECIMAL NOT NULL,
     isbn DECIMAL NOT NULL,
     email VARCHAR(50),
+    title VARCHAR(200) NOT NULL,
+    author VARCHAR(100) NOT NULL,
+    upload_date DATE NOT NULL,
     FOREIGN KEY (email) REFERENCES users (email)
 );
