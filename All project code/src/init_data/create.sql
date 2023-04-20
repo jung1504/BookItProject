@@ -17,3 +17,4 @@ CREATE TABLE reviews(
     upload_date DATE NOT NULL,
     FOREIGN KEY (email) REFERENCES users (email)
 );
+    

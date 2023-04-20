@@ -58,9 +58,11 @@ app.use(
 );
 
 const user = {
-  username: undefined,
+  email: undefined,
   password: undefined,
 };
+
+const APIBaseURL = 'https://gutendex.com/books/';
 
 // *****************************************************
 // <!-- Section 4 : API Routes -->
@@ -74,12 +76,34 @@ app.get('/welcome', (req, res) => {
 
 // First route: '/' 
 app.get('/', (req, res) => {
+  if (user.email === undefined) {
     res.redirect("/login");
+  } else {
+    res.redirect("/home");
+  }
 });
 
 // Login GET route: '/home'
 app.get('/home', (req,res) => {
-  res.render("pages/home");
+  axios({
+    url: `${APIBaseURL}`,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+    },
+  })
+    .then(results => {
+      // console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
+      res.render('pages/home', {
+        books: results.data.results,
+      });
+    })
+    .catch(error => {
+      // Handle errors
+    });
 });
 
 // Register GET route: '/register'
@@ -130,7 +154,7 @@ app.post("/login", async (req, res) => {
       console.log(err);
       res.render('pages/login', {
         error: true,
-        message: "Incorrect username or password",
+        message: "Incorrect email or password",
       });
     });
   // check if password from request matches with password in DB
@@ -143,7 +167,7 @@ app.post("/login", async (req, res) => {
     } else {
         res.render('pages/login', {
             error: true,
-            message: "Incorrect username or password",
+            message: "Incorrect email or password",
         });
     };
   };
@@ -163,7 +187,7 @@ app.use(auth);
 
 
 app.get("/logout", (req, res) => {
-  user.username = undefined;
+  user.email = undefined;
   user.password = undefined;
   req.session.destroy();
   res.render("pages/login", {
