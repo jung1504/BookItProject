@@ -173,6 +173,19 @@ app.post("/login", async (req, res) => {
   };
 });
 
+// Login submission
+app.post("/addReview", (req, res) => {
+  const id = req.body.id;
+  const name = req.body.name;
+  const imageURL = req.body.imageURL;
+  const author = req.body.author;
+
+  console.log(id, name, imageURL, author);
+
+  res.redirect('home');
+
+});
+
 // Authentication Middleware.
 const auth = (req, res, next) => {
   if (!req.session.user) {
