@@ -1,0 +1,37 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+  <% if (locals.message) { %>
+    <div
+      class="alert alert-<%- locals.error ? 'danger' : 'success' %>"
+      role="alert"
+    >
+      <%= message %>
+    </div>
+    <% } %>
+    <div class="container">
+        <h1>Search</h1>
+        
+    </div>
+  
+    <form action="/search" method="GET">
+        <div class="mb-3">
+            <label for="email">Search:</label>
+            <input type="text" id="search" name="search" />
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+
+  <div class="container">
+    <footer id="footer" class="text-center fixed-bottom bg-light">
+      <div class="row">
+      </div>
+    </footer>
+  </div>
+</main>
+
+<%- include ('../partials/footer') %>
