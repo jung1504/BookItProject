@@ -10,12 +10,9 @@
       <%= message %>
     </div>
     <% } %>
-    <div class="container">
-        <h1>Search</h1>
-        
-    </div>
+    
   
-    <form action="/search" method="GET">
+    <!-- <form action="/search" method="GET">
         <div class="mb-3">
             <label for="email">Search:</label>
             <input type="text" id="search" name="search" />
@@ -23,8 +20,54 @@
         <div class="mb-3">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
-    </form>
+    </form> -->
 
+    <% if (books && books.length > 0) { %>
+        <div class="container">
+            <h1 style="text-decoration: underline; text-decoration-thickness: 2px;">Search Results:</h1>
+            
+        </div>
+    <div id="books" class="container">
+        <div class="row">
+          <% books.slice(0, 5).forEach(book => { %>
+            <div class="col-sm mt-2">
+              <div class="card" style="width: 12rem;">
+                <a href="/books/<%= book.id %>" style="color: black">
+                <div class="card-body text-center">
+                  <img src="<%- book.formats['image/jpeg'] %>" class="card-img-top" alt="No image for this book" style="height:250px">
+                      <h4><%= book.title %></h4>
+                      <% if (book.authors && book.authors.length > 0 && book.authors[0].name) { %>
+                        <p><%= book.authors[0].name %></p>
+                      <% } %>
+                  </div>
+                  </a>
+                </div>
+            </div>
+        <% }) %>
+        </div>
+        <div class="row">
+          <% books.slice(5, 10).forEach(book => { %>
+            <div class="col-sm mt-2">
+              <div class="card" style="width: 12rem;">
+                <a href="/books/<%= book.id %>" style="color: black">
+                    <div class="card-body text-center">
+                      <img src="<%- book.formats['image/jpeg'] %>" class="card-img-top" alt="No image for this book" style="height:250px">
+                          <h4><%= book.title %></h4>
+                          <% if (book.authors && book.authors.length > 0 && book.authors[0].name) { %>
+                            <p><%= book.authors[0].name %></p>
+                          <% } else {%>
+                            <p>Author Unknown</p>
+                          <% } %>
+                      </div>
+                      </a>
+                </div>
+            </div>
+        <% }) %>
+        </div>
+      </div>
+      <% } else {%>
+        <h1>No Results Found</h1>
+    <% } %>
 
   <div class="container">
     <footer id="footer" class="text-center fixed-bottom bg-light">

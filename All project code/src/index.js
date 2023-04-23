@@ -199,6 +199,29 @@ app.get("/search", (req,res) => {
   res.render("pages/search");
 })
 
+app.get(("/searchRes"), (req, res) => {
+  const query = req.query.search;
+  axios({
+    url: `${APIBaseURL}?search=${query}`,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+    },
+  })
+    .then(results => {
+      // console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
+      res.render('pages/search', {
+        books: results.data.results,
+      });
+    })
+    .catch(error => {
+      // Handle errors
+    });
+});
+
 // *****************************************************
 // <!-- Section 5 : Start Server-->
 // *****************************************************
