@@ -225,6 +225,125 @@ app.get("/logout", (req, res) => {
   });
 });
 
+// Render initial reviews page
+app.get("/reviews", function(req, res) {
+  // Defining query
+  const query = `SELECT * FROM reviews;`;
+  
+  // Passing query and rendering page
+  db.any(query)
+    .then(function(data) {
+      res.render("pages/reviews", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/reviews", {
+        data: [],
+        error: true,
+        message: "Reviews render failed."
+      })
+    });
+});
+
+// Render review search
+app.post("/reviews", function(req, res) {
+  // Defining Search Variables
+  var query = `SELECT * FROM reviews;`;
+  var title = req.body.title;
+  var author = req.body.author;
+  var email = req.body.email;
+  var rating = req.body.rating;
+
+  // For Testing
+  console.log("Search Filters:", req.body);
+  
+  // Using conditionals to specify search query
+  // NO FILTERS
+  if (title == '' && author == '' && email == '' && rating == '') {
+    query = `SELECT * FROM reviews;`;
+  }
+  // ONE FILTER
+  // Title
+  else if (title != '' && author == '' && email == '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE title = $1;`;
+  }
+  // Author
+  else if (title == '' && author != '' && email == '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE author = $2;`;
+  }
+  // Email
+  else if (title == '' && author == '' && email != '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE email = $3;`;
+  }
+  // Rating
+  else if (title == '' && author == '' && email == '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE rating = $4;`;
+  }
+  // TWO FILTERS
+  // Title & Author
+  else if (title != '' && author != '' && email == '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE title = $1 AND author = $2;`;
+  }
+  // Title & Email
+  else if (title != '' && author == '' && email != '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE title = $1 AND email = $3;`;
+  }
+  // Title & Rating
+  else if (title != '' && author == '' && email == '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE title = $1 AND rating = $4;`;
+  }
+  // Author & Email
+  else if (title == '' && author != '' && email != '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE author = $2 AND email = $3;`;
+  }
+  // Author & Rating
+  else if (title == '' && author != '' && email == '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE author = $2 AND rating = $4;`;
+  }
+  // Email & Rating
+  else if (title == '' && author == '' && email != '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE email = $3 AND rating = $4;`;
+  }
+  // THREE FILTERS
+  // No Rating
+  else if (title != '' && author != '' && email != '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE title = $1 AND author = $2 AND email = $3;`;
+  }
+  // No Email
+  else if (title != '' && author != '' && email == '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE title = $1 AND author = $2 AND rating = $4;`;
+  }
+  // No Author
+  else if (title != '' && author == '' && email != '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE title = $1 AND email = $3 AND rating = $4;`;
+  }
+  // No Title
+  else if (title == '' && author != '' && email != '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE author = $2 AND email = $3 AND rating = $4;`;
+  }
+  // ALL FILTERS
+  else {
+    query = `SELECT * FROM reviews WHERE title = $1 AND author = $2 AND email = $3 AND rating = $4;`;
+  }
+
+  // Passing query and rendering page
+  db.any(query, [req.body.title, req.body.author, req.body.email, req.body.rating])
+    .then(function(data) {
+      res.render("pages/reviews", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/reviews", {
+        data: [],
+        error: true,
+        message: "Reviews render failed."
+      })
+    });
+});
+
+
 app.get("/search", (req,res) => {
   res.render("pages/search");
 })

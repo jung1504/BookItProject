@@ -1,0 +1,75 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+    <!--Search Reviews-->
+    <div class="container">
+        <!-- FORM CODE -->
+        <h1><centre>Search Reviews:</centre></h1>
+        <form action="/reviews" method="POST">
+            <div class="mb-3">
+                <label for="title">Book Title:</label>
+                <input type="text" id="title" name="title" />
+            </div>
+            <div class="mb-3">
+                <label for="author">Book Author:</label>
+                <input type="text" id="author" name="author" />
+            </div>
+            <div class="mb-3">
+                <label for="email">Review Author:</label>
+                <input type="email" id="email" name="email" />
+            </div>
+            <div class="mb-3">
+                <label for="rating">Review Rating:</label>
+                <input type="number" id="rating" name="rating" min="1" max="10" step="0.1"/>
+            </div>
+            <!-- SUBMIT BUTTON CODE -->
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+            <!-- END SUBMIT BUTTON CODE -->
+        </form>
+        <!-- END FORM CODE -->
+      </div>
+    <div class="container">
+    <!--Displaying Reviews-->
+    <table class="table">
+        <h1><centre>Reviews:</centre></h1>
+        <thead>
+            <th>Book Title</th>
+            <th>Book Author</th>
+            <th>Review Author</th>
+            <th>Review Rating</th>
+        </thead>
+        <tbody>
+            <% data.forEach(review=> { %>
+                <tr>
+                    <td>
+                        <%= review.title %>
+                    </td>
+                    <td>
+                        <%= review.author %>
+                    </td>
+                    <td>
+                        <%= review.email %>
+                    </td>
+                    <td>
+                        <%= review.rating %>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Review:
+                    </th>
+                    <td colspan="3">
+                        <%= review.review %>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>    
+    </table>
+
+    </div>
+</main>
+
+<%- include ('../partials/footer') %>
