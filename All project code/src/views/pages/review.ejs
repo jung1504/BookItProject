@@ -1,0 +1,45 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+  <% if (locals.message) { %>
+    <div
+      class="alert alert-<%- locals.error ? 'danger' : 'success' %>"
+      role="alert"
+    >
+      <%= message %>
+    </div>
+    <% } %>
+    <div class="container">
+        <h1>Add Your Review</h1>
+    </div>
+  
+    <div id="review" class="container">
+        <h4><%= selectedBook.title %></h4>
+        <p><%= selectedBook.author %></p>
+        <p><%= selectedBook.id %></p>
+        <img src="<%- selectedBook.imageURL %>" alt="No image for this book">
+    </div>
+
+    <div id="review" class="container">
+        <!-- This doesn't actually submit a review, it just redirects to home for now -->
+        <form action="/" method="GET">
+            <div class="mb-3">
+                <label for="userReview">Your Review:</label>
+                <input type="text" id="userReview" name="userReview" />
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+            </div>
+        </form>
+    </div>
+
+  <div class="container">
+    <footer id="footer" class="text-center fixed-bottom bg-light">
+      <div class="row">
+      </div>
+    </footer>
+  </div>
+</main>
+
+<%- include ('../partials/footer') %>

@@ -58,8 +58,17 @@ app.use(
 );
 
 const user = {
-  username: undefined,
+  email: undefined,
   password: undefined,
+};
+
+const APIBaseURL = 'https://gutendex.com/books/';
+
+const selectedBook = {
+  name: undefined,
+  author: undefined,
+  imageURL: undefined,
+  id: undefined
 };
 
 // *****************************************************
@@ -74,12 +83,34 @@ app.get('/welcome', (req, res) => {
 
 // First route: '/' 
 app.get('/', (req, res) => {
+  if (user.email === undefined) {
     res.redirect("/login");
+  } else {
+    res.redirect("/home");
+  }
 });
 
 // Login GET route: '/home'
 app.get('/home', (req,res) => {
-  res.render("pages/home");
+  axios({
+    url: `${APIBaseURL}`,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+    },
+  })
+    .then(results => {
+      // console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
+      res.render('pages/home', {
+        books: results.data.results,
+      });
+    })
+    .catch(error => {
+      // Handle errors
+    });
 });
 
 // Register GET route: '/register'
@@ -130,7 +161,7 @@ app.post("/login", async (req, res) => {
       console.log(err);
       res.render('pages/login', {
         error: true,
-        message: "Incorrect username or password",
+        message: "Incorrect email or password",
       });
     });
   // check if password from request matches with password in DB
@@ -143,10 +174,33 @@ app.post("/login", async (req, res) => {
     } else {
         res.render('pages/login', {
             error: true,
-            message: "Incorrect username or password",
+            message: "Incorrect email or password",
         });
     };
   };
+});
+
+app.get("/addReview", (req, res) => {
+  res.render('pages/review')
+});
+
+// Login submission
+app.post("/addReview", (req, res) => {
+  const id = req.body.id;
+  const name = req.body.name;
+  const imageURL = req.body.imageURL;
+  const author = req.body.author;
+
+  selectedBook.id = id;
+  selectedBook.name = name;
+  selectedBook.imageURL = imageURL;
+  selectedBook.author = author;
+
+  console.log(selectedBook.id, selectedBook.name, selectedBook.imageURL, selectedBook.author);
+
+  res.render('pages/review', {
+    selectedBook: selectedBook
+  });
 });
 
 // Authentication Middleware.
@@ -163,7 +217,7 @@ app.use(auth);
 
 
 app.get("/logout", (req, res) => {
-  user.username = undefined;
+  user.email = undefined;
   user.password = undefined;
   req.session.destroy();
   res.render("pages/login", {
@@ -289,6 +343,70 @@ app.post("/reviews", function(req, res) {
     });
 });
 
+
+app.get("/search", (req,res) => {
+  res.render("pages/search");
+})
+
+app.get(("/searchRes"), (req, res) => {
+  const query = req.query.search;
+  axios({
+    url: `${APIBaseURL}?search=${query}`,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+    },
+  })
+    .then(results => {
+      //console.log(results.data.count);
+      // console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
+      res.render('pages/search', {
+        books: results.data,
+      });
+    })
+    .catch(error => {
+      // Handle errors
+    });
+});
+
+app.get(("/changePage"), (req, res) => { //this api is for when there are multiple pages for some search result, it is called by the buttons at the bottom of the search page.
+  const query = req.query.search;
+  // console.log(query);
+  // console.log(`${query[0]}&search=${query[1]}`);
+
+  let urlForAxios;
+
+  if (query[0].includes("https://gutendex.com/books/?page=")) {
+    urlForAxios = `${query[0]}&search=${query[1]}`;
+  } else {
+    urlForAxios = query;
+  }
+
+
+  axios({
+    url: `${urlForAxios}`,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+    },
+  })
+    .then(results => {
+      //console.log(results.data.count);
+      // console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
+      res.render('pages/search', {
+        books: results.data,
+      });
+    })
+    .catch(error => {
+      // Handle errors
+    });
+});
 
 // *****************************************************
 // <!-- Section 5 : Start Server-->
