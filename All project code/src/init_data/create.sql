@@ -14,3 +14,5 @@ CREATE TABLE reviews(
     email VARCHAR(50),
     FOREIGN KEY (email) REFERENCES users (email)
 );
+
+

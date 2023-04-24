@@ -1,0 +1,91 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+    <% if (locals.message) { %>
+        <div
+          class="alert alert-<%- locals.error ? 'danger' : 'success' %>"
+          role="alert">
+          <%= message %>
+        </div>
+        <% } %>
+  <div class="container">
+    <!-- THE REST OF YOUR HTML CODE GOES HERE -->
+
+    <h1><centre>Profile</centre></h1>
+
+    <!------<div class="container">
+        <form action="" method="GET">
+          <button type="submit" class="btn mt-3">Edit</button>
+        </form>
+      </div>
+
+        <form action="/username" method="POST">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username"><br>
+        </form> 
+
+        <form action="/userage" method="POST"></form>
+            <label for="age">Age:</label><br>
+            <input type="text" id="age" name="age" value="test"><br>
+
+        </form>
+
+        <form action="/userlocation" method="POST">
+            <label for="location">Location:</label><br>
+            <input type="text" id="location" name="location" value="test"><br>
+        </form>
+
+        <form action="/userfavorite" method="POST">
+            <label for="favorite">Favorite Book:</label><br>
+            <input type="text" id="favorite" name="favorite" value="test"><br>
+        </form>    
+        
+        <form action="/userabout" method="POST">
+            <label for="about">About me:</label><br>
+            <input type="text" id="about" name="about" value="test"><br><br>
+        </form>
+
+           <input type="submit" value="Submit"> --->
+
+
+        <ul style = "list-style: none">    
+            <li>
+                <button>EDIT</button>    
+                <label>Username:</label>
+                <span>...</span>
+            </li>
+
+            <li>
+                <button>EDIT</button>  
+                <label>Age:</label>
+                <span>...</span>
+            </li>
+
+            <li> 
+                <button>EDIT</button>   
+                <label>Location:</label>
+                <span>...</span>
+
+            </li>
+
+            <li>    
+                <button>EDIT</button>
+                <label>Favorite Book:</label>
+                <span>...</span> 
+            </li>
+
+            <li>  
+                <button>EDIT</button>  
+                <label>About Me:</label>
+                <span>...</span>
+            </li>
+        </ul>
+  </div>
+  <body>
+  <script type = "text/javascript" src = "../partials/user_stuff.js"></script>
+  </body>
+
+</main>
+
+<%- include ('../partials/footer') %>

@@ -149,6 +149,78 @@ app.post("/login", async (req, res) => {
   };
 });
 
+
+
+app.get('/user', (req,res) => {
+  res.render("pages/user");
+});
+
+app.post('/username', async (req, res) => {
+
+  const query = `INSERT INTO users (username) VALUES ($1);`;
+  await db.any(query, [
+      req.body.username,
+  ])
+
+    .then(function (data) {
+      res.redirect('user')
+  })
+});
+
+app.post('/userage', async (req, res) => {
+
+  const query = `INSERT INTO users (age) VALUES ($1);`;
+  await db.any(query, [
+      req.body.age,
+  ])
+
+    .then(function (data) {
+      res.redirect('user')
+  })
+});
+
+
+
+app.post('/userfavorite', async (req, res) => {
+
+  const query = `INSERT INTO users (favorite_book) VALUES ($1);`;
+  await db.any(query, [
+      req.body.favorite_book,
+  ])
+
+    .then(function (data) {
+      res.redirect('user')
+  })
+});
+
+
+app.post('/userlocation', async (req, res) => {
+
+  const query = `INSERT INTO users (location) VALUES ($1);`;
+  await db.any(query, [
+      req.body.location,
+  ])
+
+    .then(function (data) {
+      res.redirect('user')
+  })
+});
+
+app.post('/userabout', async (req, res) => {
+
+  const query = `INSERT INTO users (about_me) VALUES ($1);`;
+  await db.any(query, [
+      req.body.about_me,
+  ])
+
+    .then(function (data) {
+      res.redirect('user')
+  })
+});
+
+
+
+
 // Authentication Middleware.
 const auth = (req, res, next) => {
   if (!req.session.user) {
