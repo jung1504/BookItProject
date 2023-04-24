@@ -64,6 +64,13 @@ const user = {
 
 const APIBaseURL = 'https://gutendex.com/books/';
 
+const selectedBook = {
+  name: undefined,
+  author: undefined,
+  imageURL: undefined,
+  id: undefined
+};
+
 // *****************************************************
 // <!-- Section 4 : API Routes -->
 // *****************************************************
@@ -173,6 +180,10 @@ app.post("/login", async (req, res) => {
   };
 });
 
+app.get("/addReview", (req, res) => {
+  res.render('pages/review')
+});
+
 // Login submission
 app.post("/addReview", (req, res) => {
   const id = req.body.id;
@@ -180,10 +191,16 @@ app.post("/addReview", (req, res) => {
   const imageURL = req.body.imageURL;
   const author = req.body.author;
 
-  console.log(id, name, imageURL, author);
+  selectedBook.id = id;
+  selectedBook.name = name;
+  selectedBook.imageURL = imageURL;
+  selectedBook.author = author;
 
-  res.redirect('home');
+  console.log(selectedBook.id, selectedBook.name, selectedBook.imageURL, selectedBook.author);
 
+  res.render('pages/review', {
+    selectedBook: selectedBook
+  });
 });
 
 // Authentication Middleware.
