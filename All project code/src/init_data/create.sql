@@ -16,3 +16,12 @@ CREATE TABLE reviews(
 );
 
 
+DROP TABLE IF EXISTS user_profile CASCADE;
+CREATE TABLE user_profile(
+    user_id SERIAL PRIMARY KEY NOT NULL,
+    username VARCHAR(10) NOT NULL,
+    user_age INT,
+    user_location VARCHAR(40),
+    favorite_book VARCHAR(40),
+    about TEXT
+);
