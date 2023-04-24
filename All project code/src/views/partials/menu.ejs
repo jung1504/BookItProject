@@ -16,12 +16,26 @@
             <li class="nav-item">
                 <a class="nav-link" href="/home">Home</a>
             </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/">Search</a>
-        </li>
         <li class="nav-item">
           <a class="nav-link" href="/">Profile</a>
       </li>
+
+      <li class="nav-item">
+        <form action="/searchRes" method="GET" class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label for="search" class="col-form-label">Search:</label>
+          </div>
+          <div class="col-auto">
+            <input type="text" id="search" name="search" class="form-control">
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </form>
+      </li>
+
           </ul>
           <div class="nav-item me-1">
                 <a class="nav-link" href="/logout">Logout</a>

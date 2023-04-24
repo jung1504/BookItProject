@@ -195,6 +195,70 @@ app.get("/logout", (req, res) => {
   });
 });
 
+app.get("/search", (req,res) => {
+  res.render("pages/search");
+})
+
+app.get(("/searchRes"), (req, res) => {
+  const query = req.query.search;
+  axios({
+    url: `${APIBaseURL}?search=${query}`,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+    },
+  })
+    .then(results => {
+      //console.log(results.data.count);
+      // console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
+      res.render('pages/search', {
+        books: results.data,
+      });
+    })
+    .catch(error => {
+      // Handle errors
+    });
+});
+
+app.get(("/changePage"), (req, res) => { //this api is for when there are multiple pages for some search result, it is called by the buttons at the bottom of the search page.
+  const query = req.query.search;
+  // console.log(query);
+  // console.log(`${query[0]}&search=${query[1]}`);
+
+  let urlForAxios;
+
+  if (query[0].includes("https://gutendex.com/books/?page=")) {
+    urlForAxios = `${query[0]}&search=${query[1]}`;
+  } else {
+    urlForAxios = query;
+  }
+
+
+  axios({
+    url: `${urlForAxios}`,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+    },
+  })
+    .then(results => {
+      //console.log(results.data.count);
+      // console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
+      res.render('pages/search', {
+        books: results.data,
+      });
+    })
+    .catch(error => {
+      // Handle errors
+    });
+});
+
 // *****************************************************
 // <!-- Section 5 : Start Server-->
 // *****************************************************

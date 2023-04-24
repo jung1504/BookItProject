@@ -1,0 +1,140 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+  <% if (locals.message) { %>
+    <div
+      class="alert alert-<%- locals.error ? 'danger' : 'success' %>"
+      role="alert"
+    >
+      <%= message %>
+    </div>
+    <% } %>
+    
+  
+    <!-- <form action="/search" method="GET">
+        <div class="mb-3">
+            <label for="email">Search:</label>
+            <input type="text" id="search" name="search" />
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form> -->
+
+    <!-- <% if (books && books.length > 0) { %>
+        <div class="container">
+            <h1 style="text-decoration: underline; text-decoration-thickness: 2px;">Search Results:</h1>
+            
+        </div>
+    <div id="books" class="container">
+        <div class="row">
+          <% books.slice(0, 5).forEach(book => { %>
+            <div class="col-sm mt-2">
+              <div class="card" style="width: 12rem;">
+                <a href="/books/<%= book.id %>" style="color: black">
+                <div class="card-body text-center">
+                  <img src="<%- book.formats['image/jpeg'] %>" class="card-img-top" alt="No image for this book" style="height:250px">
+                      <h4><%= book.title %></h4>
+                      <% if (book.authors && book.authors.length > 0 && book.authors[0].name) { %>
+                        <p><%= book.authors[0].name %></p>
+                      <% } %>
+                  </div>
+                  </a>
+                </div>
+            </div>
+        <% }) %>
+        </div>
+        <div class="row">
+          <% books.slice(5, 10).forEach(book => { %>
+            <div class="col-sm mt-2">
+              <div class="card" style="width: 12rem;">
+                <a href="/books/<%= book.id %>" style="color: black">
+                    <div class="card-body text-center">
+                      <img src="<%- book.formats['image/jpeg'] %>" class="card-img-top" alt="No image for this book" style="height:250px">
+                          <h4><%= book.title %></h4>
+                          <% if (book.authors && book.authors.length > 0 && book.authors[0].name) { %>
+                            <p><%= book.authors[0].name %></p>
+                          <% } else {%>
+                            <p>Author Unknown</p>
+                          <% } %>
+                      </div>
+                      </a>
+                </div>
+            </div>
+        <% }) %>
+        </div>
+      </div>
+      <% } else {%>
+        <h1>No Results Found</h1>
+    <% } %> -->
+
+    <% if (books.results && books.results.length > 0) { %>
+        <div class="container">
+          <h1 style="text-decoration: underline; text-decoration-thickness: 2px;">Search Results:</h1>
+          <p><%= books.count %> results</p>
+        </div>
+        <div id="books" class="container">
+          <div class="row">
+            <% books.results.forEach((book, index) => { %>
+              <% if (index > 0 && index % 5 === 0) { %> <!-- loops through all book results and displays their content, creating a new row after every 5th book-->
+                </div><div class="row">
+              <% } %>
+              <div class="col-sm mt-2">
+                <div class="card" style="width: 12rem;">
+                  <a href="/books/<%= book.id %>" style="color: black"> <!-- redirects to /books/${id} page, can change in future but this is supposed to direct the user to the book page where more info about the book is displayed and also the reviews are shown -->
+                    <div class="card-body text-center">
+                      <img src="<%- book.formats['image/jpeg'] %>" class="card-img-top" alt="No image for this book" style="height:250px">
+                      <% if (book.title && book.title.length > 50) { %>
+                        <h4><%= book.title.slice(0, 50) + '...' %></h4> <!-- limits the displayed title to 50 chars -->
+                      <% } else { %>
+                        <h4><%= book.title %></h4>
+                      <% } %>
+                      <% if (book.authors && book.authors.length > 0 && book.authors[0].name) { %>
+                        <p><%= book.authors[0].name %></p>
+                      <% } else { %>
+                        <p>Author Unknown</p> <!-- for when no author is provided -->
+                        <% } %>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+          <div class="row mt-2"> <!-- buttons at the bottom of the page to change which page of search results you want to be on (pagination), does not display current page-->
+            <div class="col-sm text-center">
+              <% if (books.previous) { %>
+                <a href="/changePage?search=<%= books.previous %>" class="btn btn-primary" style="width: 25px; height: 25px; padding: 0; margin-right: 10px;">
+                  &lt;
+                </a>
+              <% } else { %>
+                <button class="btn btn-secondary" style="width: 25px; height: 25px; padding: 0; margin-right: 10px;" disabled>
+                  &lt;
+                </button>
+              <% } %>
+              <% if (books.next) { %>
+                <a href="/changePage?search=<%= books.next %>" class="btn btn-primary" style="width: 25px; height: 25px; padding: 0;">
+                  &gt;
+                </a>
+              <% } else { %>
+                <button class="btn btn-secondary" style="width: 25px; height: 25px; padding: 0;" disabled>
+                  &gt;
+                </button>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      <% } else {%>
+        <h1>No Results Found</h1>
+      <% } %>
+      
+
+  <div class="container">
+    <footer id="footer" class="text-center fixed-bottom bg-light">
+      <div class="row">
+      </div>
+    </footer>
+  </div>
+</main>
+
+<%- include ('../partials/footer') %>
