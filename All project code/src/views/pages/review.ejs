@@ -23,11 +23,21 @@
 
     <div id="review" class="container">
         <!-- This doesn't actually submit a review, it just redirects to home for now -->
-        <form action="/" method="GET">
+        <form action="/addReviewData" method="POST">
+          <input type="hidden" name="title" value="<%- selectedBook.title %>">
+          <input type="hidden" name="author" value="<%- selectedBook.author %>">
+          <input type="hidden" name="isbn" value="<%- selectedBook.id %>">
+          <input type="hidden" name="email" value="testEmail25@colorado.edu"> <!--figure out how to grab user email-->
+          
             <div class="mb-3">
                 <label for="userReview">Your Review:</label>
                 <input type="text" id="userReview" name="userReview" />
             </div>
+            
+            <div class="mb-3">
+              <label for="rating">Review Rating:</label>
+              <input type="number" id="rating" name="rating" min="1" max="10" step="0.1"/>
+          </div>
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary">Submit Review</button>
             </div>

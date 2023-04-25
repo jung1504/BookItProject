@@ -197,9 +197,24 @@ app.post("/addReview", (req, res) => {
   selectedBook.author = author;
 
   console.log(selectedBook.id, selectedBook.name, selectedBook.imageURL, selectedBook.author);
-
   res.render('pages/review', {
     selectedBook: selectedBook
+  });
+});
+
+app.post("/addReviewData", function(req,res) {
+  const query = `INSERT INTO reviews (review, rating, isbn, email, title, author, upload_date) VALUES ($1, $2, $3, $4, $5, $6, '2023-04-19');`;
+  db.any(query, [req.body.userReview, req.body.rating, req.body.isbn, req.body.email, req.body.title, req.body.author])
+  
+  .then(function(data) {
+    res.render("pages/addedReview", {
+      message: 'Review Added Successfully'
+    });
+  }) 
+  .catch(function(error) {
+    res.render("pages/addedReview", {
+      message: 'Review Failed to Add'
+    })
   });
 });
 
@@ -347,6 +362,10 @@ app.post("/reviews", function(req, res) {
 app.get("/search", (req,res) => {
   res.render("pages/search");
 })
+
+// app.get("/addedReview", (req,res) => {
+//   res.render("pages/addedReview");
+// })
 
 app.get(("/searchRes"), (req, res) => {
   const query = req.query.search;
