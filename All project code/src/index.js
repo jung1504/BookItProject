@@ -65,11 +65,19 @@ const user = {
 const APIBaseURL = 'https://gutendex.com/books/';
 
 const selectedBook = {
-  name: undefined,
+  title: undefined,
   author: undefined,
   imageURL: undefined,
   id: undefined
 };
+
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+var yyyy = today.getFullYear();
+
+today = yyyy + '-' + mm + '-' + dd;
+
 
 // *****************************************************
 // <!-- Section 4 : API Routes -->
@@ -184,27 +192,26 @@ app.get("/addReview", (req, res) => {
   res.render('pages/review')
 });
 
-// Login submission
 app.post("/addReview", (req, res) => {
   const id = req.body.id;
-  const name = req.body.name;
+  const title = req.body.title;
   const imageURL = req.body.imageURL;
   const author = req.body.author;
 
   selectedBook.id = id;
-  selectedBook.name = name;
+  selectedBook.title = title;
   selectedBook.imageURL = imageURL;
   selectedBook.author = author;
 
-  console.log(selectedBook.id, selectedBook.name, selectedBook.imageURL, selectedBook.author);
+  console.log(selectedBook.id, selectedBook.title, selectedBook.imageURL, selectedBook.author);
   res.render('pages/review', {
     selectedBook: selectedBook
   });
 });
 
 app.post("/addReviewData", function(req,res) {
-  const query = `INSERT INTO reviews (review, rating, isbn, email, title, author, upload_date) VALUES ($1, $2, $3, $4, $5, $6, '2023-04-19');`;
-  db.any(query, [req.body.userReview, req.body.rating, req.body.isbn, user.email, req.body.title, req.body.author])
+  const query = `INSERT INTO reviews (review, rating, id, email, title, author, upload_date) VALUES ($1, $2, $3, $4, $5, $6, '${today}');`;
+  db.any(query, [req.body.userReview, req.body.rating, req.body.id, user.email, req.body.title, req.body.author])
   
   .then(function(data) {
     res.render("pages/addedReview", {
