@@ -434,6 +434,29 @@ app.get(("/changePage"), (req, res) => { //this api is for when there are multip
     });
 });
 
+app.get("/userpage", function(req, res) {
+  
+  var email = user.email;
+
+  const query = `SELECT * FROM reviews WHERE email = '${email}' ;`;
+  
+  // Passing query and rendering page
+  db.any(query)
+    .then(function(data) {
+      res.render("pages/userpage", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/userpage", {
+        data: [],
+        error: true,
+        message: "userpage render failed."
+      })
+    });
+
+});
+
 // *****************************************************
 // <!-- Section 5 : Start Server-->
 // *****************************************************
