@@ -159,7 +159,7 @@ app.get('/changeProfile', (req,res) => {
 });
 
 app.post('/changeProfile',  (req, res) => {
-  const query = "INSERT INTO user_profile (username, user_age, user_location, favorite_book, about)";
+  const query = "INSERT INTO user_profile (username, user_age, user_location, favorite_book, about) VALUES ($1, $2, $3, $4, $5)";
   db.any(query, [req.body.username, req.body.userAge, req.body.userLocation, req.body.favoriteBook, req.body.about])
   .then((data) => {
     res.render("pages/user", {
