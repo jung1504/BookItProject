@@ -150,73 +150,96 @@ app.post("/login", async (req, res) => {
 });
 
 
-
 app.get('/user', (req,res) => {
   res.render("pages/user");
 });
 
-app.post('/username', async (req, res) => {
-
-  const query = `INSERT INTO users (username) VALUES ($1);`;
-  await db.any(query, [
-      req.body.username,
-  ])
-
-    .then(function (data) {
-      res.redirect('user')
-  })
+app.get('/changeProfile', (req,res) => {
+  res.render("pages/changeProfile");
 });
 
-app.post('/userage', async (req, res) => {
-
-  const query = `INSERT INTO users (age) VALUES ($1);`;
-  await db.any(query, [
-      req.body.age,
-  ])
-
-    .then(function (data) {
-      res.redirect('user')
+app.post('/changeProfile',  (req, res) => {
+  const query = "INSERT INTO user_profile (username, user_age, user_location, favorite_book, about)";
+  db.any(query, [req.body.username, req.body.userAge, req.body.userLocation, req.body.favoriteBook, req.body.about])
+  .then((data) => {
+    res.render("pages/user", {
+    message: 'Profile Saved'
+  });
   })
+  .catch((err) => {
+    res.render("pages/user", {
+    message: 'Error Saving Profile'
+       })
+  });
 });
 
 
 
-app.post('/userfavorite', async (req, res) => {
-
-  const query = `INSERT INTO users (favorite_book) VALUES ($1);`;
-  await db.any(query, [
-      req.body.favorite_book,
-  ])
-
-    .then(function (data) {
-      res.redirect('user')
-  })
-});
 
 
-app.post('/userlocation', async (req, res) => {
+// //
+// app.post('/username', async (req, res) => {
 
-  const query = `INSERT INTO users (location) VALUES ($1);`;
-  await db.any(query, [
-      req.body.location,
-  ])
+//   const query = `INSERT INTO users (username) VALUES ($1);`;
+//   await db.any(query, [
+//       req.body.username,
+//   ])
 
-    .then(function (data) {
-      res.redirect('user')
-  })
-});
+//     .then(function (data) {
+//       res.redirect('user')
+//   })
+// });
 
-app.post('/userabout', async (req, res) => {
+// app.post('/userage', async (req, res) => {
 
-  const query = `INSERT INTO users (about_me) VALUES ($1);`;
-  await db.any(query, [
-      req.body.about_me,
-  ])
+//   const query = `INSERT INTO users (age) VALUES ($1);`;
+//   await db.any(query, [
+//       req.body.age,
+//   ])
 
-    .then(function (data) {
-      res.redirect('user')
-  })
-});
+//     .then(function (data) {
+//       res.redirect('user')
+//   })
+// });
+
+
+
+// app.post('/userfavorite', async (req, res) => {
+
+//   const query = `INSERT INTO users (favorite_book) VALUES ($1);`;
+//   await db.any(query, [
+//       req.body.favorite_book,
+//   ])
+
+//     .then(function (data) {
+//       res.redirect('user')
+//   })
+// });
+
+
+// app.post('/userlocation', async (req, res) => {
+
+//   const query = `INSERT INTO users (location) VALUES ($1);`;
+//   await db.any(query, [
+//       req.body.location,
+//   ])
+
+//     .then(function (data) {
+//       res.redirect('user')
+//   })
+// });
+
+// app.post('/userabout', async (req, res) => {
+
+//   const query = `INSERT INTO users (about_me) VALUES ($1);`;
+//   await db.any(query, [
+//       req.body.about_me,
+//   ])
+
+//     .then(function (data) {
+//       res.redirect('user')
+//   })
+// });
 
 
 
