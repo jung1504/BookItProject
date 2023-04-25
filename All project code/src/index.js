@@ -204,7 +204,7 @@ app.post("/addReview", (req, res) => {
 
 app.post("/addReviewData", function(req,res) {
   const query = `INSERT INTO reviews (review, rating, isbn, email, title, author, upload_date) VALUES ($1, $2, $3, $4, $5, $6, '2023-04-19');`;
-  db.any(query, [req.body.userReview, req.body.rating, req.body.isbn, req.body.email, req.body.title, req.body.author])
+  db.any(query, [req.body.userReview, req.body.rating, req.body.isbn, user.email, req.body.title, req.body.author])
   
   .then(function(data) {
     res.render("pages/addedReview", {
@@ -425,6 +425,29 @@ app.get(("/changePage"), (req, res) => { //this api is for when there are multip
     .catch(error => {
       // Handle errors
     });
+});
+
+app.get("/userpage", function(req, res) {
+  
+  var email = user.email;
+
+  const query = `SELECT * FROM reviews WHERE email = '${email}' ;`;
+  
+  // Passing query and rendering page
+  db.any(query)
+    .then(function(data) {
+      res.render("pages/userpage", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/userpage", {
+        data: [],
+        error: true,
+        message: "userpage render failed."
+      })
+    });
+
 });
 
 // *****************************************************
