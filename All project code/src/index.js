@@ -457,6 +457,31 @@ app.get("/userpage", function(req, res) {
 
 });
 
+app.get("/books", function(req, res) {
+  console.log("test");
+  const query = req.query.search;
+  axios({
+    url: `${APIBaseURL}?ids=${query}`,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+    },
+  })
+    .then(results => {
+      //console.log(results.data.count);
+      console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
+      res.render('pages/book', {
+        books: results.data,
+      });
+    })
+    .catch(error => {
+      // Handle errors
+    });
+})
+
 // *****************************************************
 // <!-- Section 5 : Start Server-->
 // *****************************************************

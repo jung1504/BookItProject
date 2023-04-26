@@ -1,0 +1,63 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+    
+
+    <!-- <% if (books.results && books.results.length > 0) { %>
+        <h1><%= books.results[0].title %></h1>
+    <% } %> -->
+
+    <div class="container">
+        <img src="<%- books.results[0].formats['image/jpeg'] %>" alt="book cover" style="height:500px">
+        <div class="text-and-description-container">
+          <div class="text-container">
+            <h1 class="title"><%- books.results[0].title %></h1>
+            <% if (books.results[0].authors && books.results[0].authors.length > 0 && books.results[0].authors[0].name) { %>
+                <p class="author">by <%= books.results[0].authors[0].name %></p>
+              <% } else { %>
+                <p class="author">Author Unknown</p> <!--(for when no author is provided)-->
+                <% } %>
+          </div>
+          <hr>
+          <div class="description-container">
+            <!--<p class="description">Book Details:</p>-->
+            <ul class="book-details-list">
+              <li class="book-details-item">Book id: <%- books.results[0].id  %></li>
+              <li class="book-details-item">Downloads: <%- books.results[0].download_count  %></li>
+              <li class="book-details-item">Language: <%- books.results[0].languages[0]  %></li>
+              <li class="book-details-item">
+                <% books.results[0].subjects.forEach(function(subject, index) { %>
+                  <% if (index === 0) { %>
+                    <span class="book-details-item">Subjects: <%= subject %></span>
+                  <% } else { %>
+                    <span>, <%= subject %></span>
+                  <% } %>
+                <% }); %>
+            </li>
+              <li class="book-details-item">
+                <% books.results[0].bookshelves.forEach(function(bookshelf, index) { %>
+                  <% if (index === 0) { %>
+                    <span class="book-details-item">Bookshelves: <%= bookshelf %></span>
+                  <% } else { %>
+                    <span>, <%= bookshelf %></span>
+                  <% } %>
+                <% }); %>
+            </li>
+              
+            
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+
+  <div class="container">
+    <footer id="footer" class="text-center fixed-bottom bg-light">
+      <div class="row">
+      </div>
+    </footer>
+  </div>
+</main>
+
+<%- include ('../partials/footer') %>
