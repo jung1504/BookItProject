@@ -54,21 +54,27 @@
       <div id="featuredBooks" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
+            <a href="/books?id=<%= books[0].id %>">
             <img src="<%- books[0].formats['image/jpeg'] %>" alt="Book Image" style="width:30%;object-fit: contain;">
+            </a>
             <!-- <div class="d-none d-md-block">
               <h5 style="color:black;"><%= books[0].title %></h5>
               <p style="color:black;"><%= books[0].authors[0].name %></p>
             </div> -->
           </div>
           <div class="carousel-item">
+            <a href="/books?id=<%= books[1].id %>">
             <img src="<%- books[1].formats['image/jpeg'] %>" alt="Book Image" style="width:30%;object-fit: contain;">
+            </a>
             <!-- <div class="d-none d-md-block">
               <h5 style="color:black;"><%= books[1].title %></h5>
               <p style="color:black;"><%= books[1].authors[0].name %></p>
             </div> -->
           </div>
           <div class="carousel-item">
+            <a href="/books?id=<%= books[2].id %>">
             <img src="<%- books[2].formats['image/jpeg'] %>" alt="Book Image" style="width:30%;object-fit: contain;">
+            </a>
             <!-- <div class="d-none d-md-block">
               <h5 style="color:black;"><%= books[2].title %></h5>
               <p style="color:black;"><%= books[2].authors[0].name %></p>
@@ -89,7 +95,8 @@
         <div class="row">
           <% books.slice(0, 4).forEach(book => { %>
             <div class="polaroid">
-              <img src="<%- book.formats['image/jpeg'] %>" alt="book cover">
+              <a href="/books?id=<%= book.id %>" style="color: black">
+              <img src="<%- book.formats['image/jpeg'] %>" alt="book cover" style="height:400px; width:275px; margin-top: 15px;">
               <div class="container">
                 <h4><%= book.title %></h4>
                 <p><%= book.authors[0].name %></p>
@@ -103,6 +110,7 @@
                   </div>
               </form>
               </div>
+            </a>
             </div>
         <% }) %>
         </div>
@@ -112,7 +120,8 @@
         <div class="row">
           <% books.slice(5, 9).forEach(book => { %>
             <div class="polaroid">
-              <img src="<%- book.formats['image/jpeg'] %>" alt="book cover">
+              <a href="/books?id=<%= book.id %>" style="color: black">
+              <img src="<%- book.formats['image/jpeg'] %>" alt="book cover" style="height:400px; width:275px; margin-top: 15px;">
               <div class="container">
                 <h4><%= book.title %></h4>
                 <p><%= book.authors[0].name %></p>
@@ -126,6 +135,7 @@
                   </div>
               </form>
               </div>
+            </a>
             </div>
         <% }) %>
         </div>
@@ -135,7 +145,8 @@
         <div class="row">
           <% books.slice(10, 14).forEach(book => { %>
             <div class="polaroid">
-              <img src="<%- book.formats['image/jpeg'] %>" alt="book cover">
+              <a href="/books?id=<%= book.id %>" style="color: black">
+              <img src="<%- book.formats['image/jpeg'] %>" alt="book cover" style="height:400px; width:275px; margin-top: 15px;">
               <div class="container">
                 <h4><%= book.title %></h4>
                 <p><%= book.authors[0].name %></p>
@@ -149,6 +160,7 @@
                   </div>
               </form>
               </div>
+              </a>
             </div>
         <% }) %>
         </div>
@@ -158,7 +170,8 @@
         <div class="row">
           <% books.slice(15, 19).forEach(book => { %>
             <div class="polaroid">
-              <img src="<%- book.formats['image/jpeg'] %>" alt="book cover">
+              <a href="/books?id=<%= book.id %>" style="color: black">
+              <img src="<%- book.formats['image/jpeg'] %>" alt="book cover" style="height:400px; width:275px; margin-top: 15px;">
               <div class="container">
                 <h4><%= book.title %></h4>
                 <p><%= book.authors[0].name %></p>
@@ -172,6 +185,7 @@
                   </div>
               </form>
               </div>
+              </a>
             </div>
         <% }) %>
         </div>

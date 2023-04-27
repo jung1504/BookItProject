@@ -120,8 +120,8 @@
               <% } %>
 
                 <div class="polaroid">
-                  <a href="/books?search=<%= book.id %>" style="color: black">
-                  <img src="<%- book.formats['image/jpeg'] %>" alt="book cover" style="height:400px">
+                  <a href="/books?id=<%= book.id %>" style="color: black">
+                  <img src="<%- book.formats['image/jpeg'] %>" alt="book cover" style="height:400px; width:275px; margin-top: 15px;">
                   <div class="container">
                     <% if (book.title && book.title.length > 50) { %>
                       <h4><%= book.title.slice(0, 50) + '...' %></h4> <!-- limits the displayed title to 50 chars -->

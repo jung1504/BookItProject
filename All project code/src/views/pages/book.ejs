@@ -76,7 +76,7 @@
     <% } %> -->
 
     <div class="container">
-        <img src="<%- books.results[0].formats['image/jpeg'] %>" alt="book cover" style="height:500px">
+        <img src="<%- books.results[0].formats['image/jpeg'] %>" alt="book cover" style="height:500px; width:350px">
         <div class="text-and-description-container">
           <div class="text-container">
             <h1 class="title"><%- books.results[0].title %></h1>
@@ -117,7 +117,34 @@
           </div>
         </div>
       </div>
+
+      <hr>
       
+      <table class="table">
+        <h1><centre>Reviews:</centre></h1>
+        <thead>
+            <th>Review Author</th>
+            <th>Review Rating</th>
+            <th>
+                Review:
+            </th>
+        </thead>
+        <tbody>
+            <% reviews.forEach(review=> { %>
+                <tr>
+                    <td>
+                        <%= review.email %>
+                    </td>
+                    <td>
+                        <%= review.rating %>
+                    </td>
+                    <td colspan="3">
+                        <%= review.review %>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>    
+    </table>
 
   <div class="container">
     <footer id="footer" class="text-center fixed-bottom bg-light">
@@ -126,5 +153,6 @@
     </footer>
   </div>
 </main>
+
 
 <%- include ('../partials/footer') %>

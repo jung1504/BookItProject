@@ -457,9 +457,34 @@ app.get("/userpage", function(req, res) {
 
 });
 
-app.get("/books", function(req, res) {
-  console.log("test");
-  const query = req.query.search;
+// app.get("/books", async (req, res) => {
+//   //console.log("test");
+//   const query = req.query.id;
+//   axios({
+//     url: `${APIBaseURL}?ids=${query}`,
+//     method: 'GET',
+//     dataType: 'json',
+//     headers: {
+//       'Accept-Encoding': 'application/json',
+//     },
+//     params: {
+//     },
+//   })
+//     .then(results => {
+//       //console.log(results.data.count);
+//       //console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
+//       res.render('pages/book', {
+//         books: results.data,
+//       });
+//     })
+//     .catch(error => {
+//       // Handle errors
+//     });
+
+// })
+
+app.get("/books", async (req, res) => {
+  const query = req.query.id;
   axios({
     url: `${APIBaseURL}?ids=${query}`,
     method: 'GET',
@@ -470,17 +495,38 @@ app.get("/books", function(req, res) {
     params: {
     },
   })
-    .then(results => {
-      //console.log(results.data.count);
-      console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
-      res.render('pages/book', {
-        books: results.data,
-      });
+    .then(async results => {
+      try {
+        const reviews = await getReviewsFromID(query);
+        //console.log(results.data.results);
+        //console.log(reviews);
+        res.render('pages/book', {
+          books: results.data,
+          reviews: reviews
+        });
+      } catch (error) {
+        console.log(error);
+        res.status(400).json({
+          error: error,
+        });
+      }
     })
     .catch(error => {
       // Handle errors
     });
-})
+});
+
+
+async function getReviewsFromID(id) {
+  try {
+    const query = `SELECT * FROM reviews WHERE id = ${id}`;
+    const data = await db.any(query);
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
 
 // *****************************************************
 // <!-- Section 5 : Start Server-->
