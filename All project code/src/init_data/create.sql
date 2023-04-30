@@ -16,3 +16,13 @@ CREATE TABLE reviews(
     upload_date DATE NOT NULL,
     FOREIGN KEY (email) REFERENCES users (email)
 );
+
+DROP TABLE IF EXISTS favorites CASCADE;
+CREATE TABLE favorites(
+    favorite_id SERIAL PRIMARY KEY NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    title VARCHAR (100),
+    imageURL VARCHAR(200),
+    author VARCHAR(200),
+    FOREIGN KEY (email) REFERENCES users (email)
+);

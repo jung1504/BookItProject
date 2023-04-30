@@ -209,6 +209,21 @@ app.post("/addReview", (req, res) => {
   });
 });
 
+app.post("/addFavorite", function(req, res) {
+  const query = `INSERT INTO favorites (email, title, imageURL, author) VALUES ($1, $2, $3, $4);`;
+  db.any(query, [user.email, req.body.title, req.body.imageURL, req.body.author])
+  .then(function(data) {
+    res.render("pages/addedReview", {
+      message: 'Favorite Added Successfully'
+    }); // THIS IS TEMPORARY AND NEEDS TO BE CHANGED
+  })
+  .catch(function(error) {
+    res.render("pages/addedReview", {
+      message: 'Favorite Failed to Add'
+    })
+  });
+});
+
 app.post("/addReviewData", function(req,res) {
   const query = `INSERT INTO reviews (review, rating, id, email, title, author, upload_date) VALUES ($1, $2, $3, $4, $5, $6, '${today}');`;
   db.any(query, [req.body.userReview, req.body.rating, req.body.id, user.email, req.body.title, req.body.author])

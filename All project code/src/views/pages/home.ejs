@@ -101,7 +101,16 @@
                     <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
                     <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
                   </div>
-              </form>
+                </form>
+                <form action="/addFavorite" method="POST">
+                  <div class="mb-3">
+                    <button type="submit" class="btn btn-info">Add Favorite Book</button>
+                    <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
+                    <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
+                    <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
+                    <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
+                  </div>
+                </form>
               </div>
             </div>
         <% }) %>
