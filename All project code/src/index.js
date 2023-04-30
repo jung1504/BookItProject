@@ -150,24 +150,111 @@ app.post("/login", async (req, res) => {
 });
 
 
-app.get('/user', (req,res) => {
-  res.render("pages/user");
+
+
+app.get("/user", function(req, res) {
+
+  const query = `SELECT * FROM users WHERE email = $1`;
+  
+
+  db.any(query, user.email)
+    .then(function(data) {
+      res.render("pages/user", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/user", {
+        data: [],
+        error: true,
+        message: "Users render failed."
+      })
+    });
 });
+
+
+
 
 app.get('/changeProfile', (req,res) => {
   res.render("pages/changeProfile");
 });
 
-app.post('/changeProfile',  (req, res) => {
-  const query = "INSERT INTO users (email, password, username, user_age, user_location, favorite_book, about) VALUES ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT DO NOTHING";
-  db.any(query, [user.email, user.password, req.body.username, req.body.userAge, req.body.userLocation, req.body.favoriteBook, req.body.about])
+
+
+app.post('/changeProfileUsername',  (req, res) => {
+  const query = "UPDATE users SET username = $1 WHERE email = $2";
+  db.any(query, [req.body.username, user.email])
   .then((data) => {
-    res.render("pages/user", {
+    res.render("pages/changeProfile", {
     message: 'Profile Saved'
   });
   })
   .catch((err) => {
-    res.render("pages/user", {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+app.post('/changeProfileAge',  (req, res) => {
+  const query = "UPDATE users SET user_age = $1 WHERE email = $2";
+  db.any(query, [req.body.userAge, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+
+app.post('/changeProfileLocation',  (req, res) => {
+  const query = "UPDATE users SET user_location = $1 WHERE email = $2";
+  db.any(query, [req.body.userLocation, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+app.post('/changeProfileFavoriteBook',  (req, res) => {
+  const query = "UPDATE users SET favorite_book = $1 WHERE email = $2";
+  db.any(query, [req.body.favoriteBook, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+app.post('/changeProfileAbout',  (req, res) => {
+  const query = "UPDATE users SET about = $1 WHERE email = $2";
+  db.any(query, [req.body.about, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
     message: 'Error Saving Profile'
        })
   });
@@ -177,69 +264,6 @@ app.post('/changeProfile',  (req, res) => {
 
 
 
-// //
-// app.post('/username', async (req, res) => {
-
-//   const query = `INSERT INTO users (username) VALUES ($1);`;
-//   await db.any(query, [
-//       req.body.username,
-//   ])
-
-//     .then(function (data) {
-//       res.redirect('user')
-//   })
-// });
-
-// app.post('/userage', async (req, res) => {
-
-//   const query = `INSERT INTO users (age) VALUES ($1);`;
-//   await db.any(query, [
-//       req.body.age,
-//   ])
-
-//     .then(function (data) {
-//       res.redirect('user')
-//   })
-// });
-
-
-
-// app.post('/userfavorite', async (req, res) => {
-
-//   const query = `INSERT INTO users (favorite_book) VALUES ($1);`;
-//   await db.any(query, [
-//       req.body.favorite_book,
-//   ])
-
-//     .then(function (data) {
-//       res.redirect('user')
-//   })
-// });
-
-
-// app.post('/userlocation', async (req, res) => {
-
-//   const query = `INSERT INTO users (location) VALUES ($1);`;
-//   await db.any(query, [
-//       req.body.location,
-//   ])
-
-//     .then(function (data) {
-//       res.redirect('user')
-//   })
-// });
-
-// app.post('/userabout', async (req, res) => {
-
-//   const query = `INSERT INTO users (about_me) VALUES ($1);`;
-//   await db.any(query, [
-//       req.body.about_me,
-//   ])
-
-//     .then(function (data) {
-//       res.redirect('user')
-//   })
-// });
 
 
 
