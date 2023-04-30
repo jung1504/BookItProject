@@ -262,6 +262,22 @@ app.get("/logout", (req, res) => {
   });
 });
 
+app.get("/tempProfilePage", function(req, res) {
+  const query = `SELECT * FROM favorites WHERE email = $1;`;
+  db.any(query, [user.email])
+    .then(function(data) {
+      res.render("pages/tempProfilePage", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/tempProfilePage", {
+        data: [],
+        error: true
+      })
+    });
+});
+
 // Render initial reviews page
 app.get("/reviews", function(req, res) {
   // Defining query

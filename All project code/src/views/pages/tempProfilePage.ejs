@@ -1,0 +1,37 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+    <div class="container">
+    <!--Displaying Favorites-->
+    <table class="table">
+        <h1><centre>Favorite Books:</centre></h1>
+        <thead>
+            <th>Book Title</th>
+            <th>Book Author</th>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody>
+            <% data.forEach(book=> { %>
+                <tr>
+                    <td>
+                        <%= book.title %>
+                    </td>
+                    <td>
+                        <%= book.author %>
+                    </td>
+                    <td>
+                        Temp: To be "write review" form
+                    </td>
+                    <td>
+                        Temp: To be "remove favorite" form
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>    
+    </table>
+    </div>
+</main>
+
+<%- include ('../partials/footer') %>
