@@ -1,0 +1,53 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+  <% if (locals.message) { %>
+    <div
+      class="alert alert-<%- locals.error ? 'danger' : 'success' %>"
+      role="alert"
+    >
+      <%= message %>
+    </div>
+    <% } %>
+    <div class="container">
+        <h1>Add Your Review</h1>
+    </div>
+  
+    <div id="review" class="container">
+        <h4><%= selectedBook.title %></h4>
+        <p><%= selectedBook.author %></p>
+        <p><%= selectedBook.id %></p>
+        <img src="<%- selectedBook.imageURL %>" alt="No image for this book">
+    </div>
+
+    <div id="review" class="container">
+        <form action="/addReviewData" method="POST">
+          <input type="hidden" name="title" value="<%- selectedBook.title %>">
+          <input type="hidden" name="author" value="<%- selectedBook.author %>">
+          <input type="hidden" name="id" value="<%- selectedBook.id %>">
+          
+            <div class="mb-3">
+                <label for="userReview">Your Review:</label>
+                <input type="text" id="userReview" name="userReview" />
+            </div>
+            
+            <div class="mb-3">
+              <label for="rating">Review Rating:</label>
+              <input type="number" id="rating" name="rating" min="1" max="10" step="0.1"/>
+          </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+            </div>
+        </form>
+    </div>
+
+  <div class="container">
+    <footer id="footer" class="text-center fixed-bottom bg-light">
+      <div class="row">
+      </div>
+    </footer>
+  </div>
+</main>
+
+<%- include ('../partials/footer') %>

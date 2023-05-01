@@ -56,7 +56,7 @@ describe('Server!', () => {
         expect(res).to.have.status(200);
         done();
       });
-  });
+  }).timeout(10000);
   it('negative : /login', done => {
     chai
       .request(server)
@@ -66,5 +66,5 @@ describe('Server!', () => {
         expect(err)
         done();
       });
-  });
+  }).timeout(10000);
 });

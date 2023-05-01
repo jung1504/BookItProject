@@ -58,9 +58,26 @@ app.use(
 );
 
 const user = {
-  username: undefined,
+  email: undefined,
   password: undefined,
 };
+
+const APIBaseURL = 'https://gutendex.com/books/';
+
+const selectedBook = {
+  title: undefined,
+  author: undefined,
+  imageURL: undefined,
+  id: undefined
+};
+
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+var yyyy = today.getFullYear();
+
+today = yyyy + '-' + mm + '-' + dd;
+
 
 // *****************************************************
 // <!-- Section 4 : API Routes -->
@@ -74,12 +91,34 @@ app.get('/welcome', (req, res) => {
 
 // First route: '/' 
 app.get('/', (req, res) => {
+  if (user.email === undefined) {
     res.redirect("/login");
+  } else {
+    res.redirect("/home");
+  }
 });
 
 // Login GET route: '/home'
 app.get('/home', (req,res) => {
-  res.render("pages/home");
+  axios({
+    url: `${APIBaseURL}`,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+    },
+  })
+    .then(results => {
+      // console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
+      res.render('pages/home', {
+        books: results.data.results,
+      });
+    })
+    .catch(error => {
+      // Handle errors
+    });
 });
 
 // Register GET route: '/register'
@@ -130,7 +169,7 @@ app.post("/login", async (req, res) => {
       console.log(err);
       res.render('pages/login', {
         error: true,
-        message: "Incorrect username or password",
+        message: "Incorrect email or password",
       });
     });
   // check if password from request matches with password in DB
@@ -143,10 +182,47 @@ app.post("/login", async (req, res) => {
     } else {
         res.render('pages/login', {
             error: true,
-            message: "Incorrect username or password",
+            message: "Incorrect email or password",
         });
     };
   };
+});
+
+app.get("/addReview", (req, res) => {
+  res.render('pages/review')
+});
+
+app.post("/addReview", (req, res) => {
+  const id = req.body.id;
+  const title = req.body.title;
+  const imageURL = req.body.imageURL;
+  const author = req.body.author;
+
+  selectedBook.id = id;
+  selectedBook.title = title;
+  selectedBook.imageURL = imageURL;
+  selectedBook.author = author;
+
+  console.log(selectedBook.id, selectedBook.title, selectedBook.imageURL, selectedBook.author);
+  res.render('pages/review', {
+    selectedBook: selectedBook
+  });
+});
+
+app.post("/addReviewData", function(req,res) {
+  const query = `INSERT INTO reviews (review, rating, id, email, title, author, upload_date) VALUES ($1, $2, $3, $4, $5, $6, '${today}');`;
+  db.any(query, [req.body.userReview, req.body.rating, req.body.id, user.email, req.body.title, req.body.author])
+  
+  .then(function(data) {
+    res.redirect("reviews")
+      
+  }) 
+  .catch(function(error) {
+    res.render("pages/userpage", {
+      message: 'Review Failed to Add',
+      error: true
+    })
+  });
 });
 
 
@@ -282,13 +358,294 @@ app.use(auth);
 
 
 app.get("/logout", (req, res) => {
-  user.username = undefined;
+  user.email = undefined;
   user.password = undefined;
   req.session.destroy();
   res.render("pages/login", {
     message: "Logged out successfully."
   });
 });
+
+// Render initial reviews page
+app.get("/reviews", function(req, res) {
+  // Defining query
+  const query = `SELECT * FROM reviews;`;
+  
+  // Passing query and rendering page
+  db.any(query)
+    .then(function(data) {
+      res.render("pages/reviews", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/reviews", {
+        data: [],
+        error: true,
+        message: "Reviews render failed."
+      })
+    });
+});
+
+// Render review search
+app.post("/reviews", function(req, res) {
+  // Defining Search Variables
+  var query = `SELECT * FROM reviews;`;
+  var title = req.body.title;
+  var author = req.body.author;
+  var email = req.body.email;
+  var rating = req.body.rating;
+
+  // For Testing
+  console.log("Search Filters:", req.body);
+  
+  // Using conditionals to specify search query
+  // NO FILTERS
+  if (title == '' && author == '' && email == '' && rating == '') {
+    query = `SELECT * FROM reviews;`;
+  }
+  // ONE FILTER
+  // Title
+  else if (title != '' && author == '' && email == '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE title = $1;`;
+  }
+  // Author
+  else if (title == '' && author != '' && email == '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE author = $2;`;
+  }
+  // Email
+  else if (title == '' && author == '' && email != '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE email = $3;`;
+  }
+  // Rating
+  else if (title == '' && author == '' && email == '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE rating = $4;`;
+  }
+  // TWO FILTERS
+  // Title & Author
+  else if (title != '' && author != '' && email == '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE title = $1 AND author = $2;`;
+  }
+  // Title & Email
+  else if (title != '' && author == '' && email != '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE title = $1 AND email = $3;`;
+  }
+  // Title & Rating
+  else if (title != '' && author == '' && email == '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE title = $1 AND rating = $4;`;
+  }
+  // Author & Email
+  else if (title == '' && author != '' && email != '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE author = $2 AND email = $3;`;
+  }
+  // Author & Rating
+  else if (title == '' && author != '' && email == '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE author = $2 AND rating = $4;`;
+  }
+  // Email & Rating
+  else if (title == '' && author == '' && email != '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE email = $3 AND rating = $4;`;
+  }
+  // THREE FILTERS
+  // No Rating
+  else if (title != '' && author != '' && email != '' && rating == '') {
+    query = `SELECT * FROM reviews WHERE title = $1 AND author = $2 AND email = $3;`;
+  }
+  // No Email
+  else if (title != '' && author != '' && email == '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE title = $1 AND author = $2 AND rating = $4;`;
+  }
+  // No Author
+  else if (title != '' && author == '' && email != '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE title = $1 AND email = $3 AND rating = $4;`;
+  }
+  // No Title
+  else if (title == '' && author != '' && email != '' && rating != '') {
+    query = `SELECT * FROM reviews WHERE author = $2 AND email = $3 AND rating = $4;`;
+  }
+  // ALL FILTERS
+  else {
+    query = `SELECT * FROM reviews WHERE title = $1 AND author = $2 AND email = $3 AND rating = $4;`;
+  }
+
+  // Passing query and rendering page
+  db.any(query, [req.body.title, req.body.author, req.body.email, req.body.rating])
+    .then(function(data) {
+      res.render("pages/reviews", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/reviews", {
+        data: [],
+        error: true,
+        message: "Reviews render failed."
+      })
+    });
+});
+
+
+app.get("/search", (req,res) => {
+  res.render("pages/search");
+})
+
+// app.get("/addedReview", (req,res) => {
+//   res.render("pages/addedReview");
+// })
+
+app.get(("/searchRes"), (req, res) => {
+  const query = req.query.search;
+  axios({
+    url: `${APIBaseURL}?search=${query}`,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+    },
+  })
+    .then(results => {
+      //console.log(results.data.count);
+      // console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
+      res.render('pages/search', {
+        books: results.data,
+      });
+    })
+    .catch(error => {
+      // Handle errors
+    });
+});
+
+app.get(("/changePage"), (req, res) => { //this api is for when there are multiple pages for some search result, it is called by the buttons at the bottom of the search page.
+  const query = req.query.search;
+  // console.log(query);
+  // console.log(`${query[0]}&search=${query[1]}`);
+
+  let urlForAxios;
+
+  if (query[0].includes("https://gutendex.com/books/?page=")) {
+    urlForAxios = `${query[0]}&search=${query[1]}`;
+  } else {
+    urlForAxios = query;
+  }
+
+
+  axios({
+    url: `${urlForAxios}`,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+    },
+  })
+    .then(results => {
+      //console.log(results.data.count);
+      // console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
+      res.render('pages/search', {
+        books: results.data,
+      });
+    })
+    .catch(error => {
+      // Handle errors
+    });
+});
+
+app.get("/userpage", function(req, res) {
+  
+  var email = user.email;
+
+  const query = `SELECT * FROM reviews WHERE email = '${email}' ;`;
+  
+  // Passing query and rendering page
+  db.any(query)
+    .then(function(data) {
+      res.render("pages/userpage", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/userpage", {
+        data: [],
+        error: true,
+        message: "userpage render failed."
+      })
+    });
+
+});
+
+// app.get("/books", async (req, res) => {
+//   //console.log("test");
+//   const query = req.query.id;
+//   axios({
+//     url: `${APIBaseURL}?ids=${query}`,
+//     method: 'GET',
+//     dataType: 'json',
+//     headers: {
+//       'Accept-Encoding': 'application/json',
+//     },
+//     params: {
+//     },
+//   })
+//     .then(results => {
+//       //console.log(results.data.count);
+//       //console.log(results.data.results); // the results will be displayed on the terminal if the docker containers are running // Send some parameters
+//       res.render('pages/book', {
+//         books: results.data,
+//       });
+//     })
+//     .catch(error => {
+//       // Handle errors
+//     });
+
+// })
+
+app.get("/books", async (req, res) => {
+  const query = req.query.id;
+  axios({
+    url: `${APIBaseURL}?ids=${query}`,
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept-Encoding': 'application/json',
+    },
+    params: {
+    },
+  })
+    .then(async results => {
+      try {
+        const reviews = await getReviewsFromID(query);
+        //console.log(results.data.results);
+        //console.log(reviews);
+        res.render('pages/book', {
+          books: results.data,
+          reviews: reviews
+        });
+      } catch (error) {
+        console.log(error);
+        res.status(400).json({
+          error: error,
+        });
+      }
+    })
+    .catch(error => {
+      // Handle errors
+    });
+});
+
+
+async function getReviewsFromID(id) {
+  try {
+    const query = `SELECT * FROM reviews WHERE id = ${id}`;
+    const data = await db.any(query);
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
 
 // *****************************************************
 // <!-- Section 5 : Start Server-->
