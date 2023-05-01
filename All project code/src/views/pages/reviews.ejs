@@ -40,6 +40,7 @@
             <th>Book Author</th>
             <th>Review Author</th>
             <th>Review Rating</th>
+            <th>Book Cover</th>
         </thead>
         <tbody>
             <% data.forEach(review=> { %>
@@ -55,6 +56,9 @@
                     </td>
                     <td>
                         <%= review.rating %>
+                    </td>
+                    <td>
+                       <img src="<%- review.imageurl %>" alt="no image for book"> 
                     </td>
                 </tr>
                 <tr>
