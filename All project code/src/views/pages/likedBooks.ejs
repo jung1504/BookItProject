@@ -9,7 +9,7 @@
         <thead>
             <th>Book Title</th>
             <th>Book Author</th>
-            <th></th>
+            <th>Book Image</th>
             <th></th>
         </thead>
         <tbody>
@@ -22,7 +22,9 @@
                         <%= book.author %>
                     </td>
                     <td>
-                        Temp: To be "write review" form
+                        <div>
+                            <img src="<%- book.imageURL %>"></img>
+                        </div>
                     </td>
                     <td>
                         Temp: To be "remove liked book" form

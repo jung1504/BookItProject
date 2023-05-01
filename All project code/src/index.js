@@ -264,6 +264,7 @@ app.get("/likedBooks", function(req, res) {
   const query = `SELECT * FROM likedBooks WHERE email = $1;`;
   db.any(query, [user.email])
     .then(function(data) {
+      console.log(data);
       res.render("pages/likedBooks", {
         data
       });
