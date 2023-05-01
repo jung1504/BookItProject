@@ -209,17 +209,15 @@ app.post("/addReview", (req, res) => {
   });
 });
 
-app.post("/addFavorite", function(req, res) {
-  const query = `INSERT INTO favorites (email, title, imageURL, author) VALUES ($1, $2, $3, $4);`;
+app.post("/addLikedBook", function(req, res) {
+  const query = `INSERT INTO likedBooks (email, title, imageURL, author) VALUES ($1, $2, $3, $4);`;
   db.any(query, [user.email, req.body.title, req.body.imageURL, req.body.author])
   .then(function(data) {
-    res.render("pages/addedReview", {
-      message: 'Favorite Added Successfully'
-    }); // THIS IS TEMPORARY AND NEEDS TO BE CHANGED
+    res.redirect("likedBooks"); 
   })
   .catch(function(error) {
     res.render("pages/addedReview", {
-      message: 'Favorite Failed to Add'
+      message: 'Failed to add liked book'
     })
   });
 });
@@ -262,16 +260,16 @@ app.get("/logout", (req, res) => {
   });
 });
 
-app.get("/tempProfilePage", function(req, res) {
-  const query = `SELECT * FROM favorites WHERE email = $1;`;
+app.get("/likedBooks", function(req, res) {
+  const query = `SELECT * FROM likedBooks WHERE email = $1;`;
   db.any(query, [user.email])
     .then(function(data) {
-      res.render("pages/tempProfilePage", {
+      res.render("pages/likedBooks", {
         data
       });
     })
     .catch(function(error) {
-      res.render("pages/tempProfilePage", {
+      res.render("pages/likedBooks", {
         data: [],
         error: true
       })
