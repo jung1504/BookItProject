@@ -1,0 +1,31 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+    <div>
+
+    </div>
+    <div>
+        <table class="table">
+            <h1><centre>Reading list:</centre></h1>
+            <thead>
+                <th>Book</th>
+                <th>Author</th>
+                <!-- <th>button to remove from reading list</th> -->
+            </thead> 
+            <tbody>
+                <% data.forEach(book=> { %>
+
+                
+                <tr>
+                    <td><%= book.title %></td>
+                    <td><%= book.author %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+
+        </table>
+    </div>
+</main>
+
+<%- include ('../partials/footer') %>
