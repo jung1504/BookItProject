@@ -19,6 +19,7 @@ CREATE TABLE reviews(
     title VARCHAR(200) NOT NULL,
     author VARCHAR(100) NOT NULL,
     upload_date DATE NOT NULL,
+    imageurl VARCHAR(200),
     FOREIGN KEY (email) REFERENCES users (email)
 );
 

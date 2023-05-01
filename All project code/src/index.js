@@ -234,8 +234,8 @@ app.post("/deleteLikedBook", function(req, res) {
 });
 
 app.post("/addReviewData", function(req,res) {
-  const query = `INSERT INTO reviews (review, rating, id, email, title, author, upload_date) VALUES ($1, $2, $3, $4, $5, $6, '${today}');`;
-  db.any(query, [req.body.userReview, req.body.rating, req.body.id, user.email, req.body.title, req.body.author])
+  const query = `INSERT INTO reviews (review, rating, id, email, title, author, upload_date, imageurl) VALUES ($1, $2, $3, $4, $5, $6, '${today}', $7);`;
+  db.any(query, [req.body.userReview, req.body.rating, req.body.id, user.email, req.body.title, req.body.author, req.body.imageURL])
   
   .then(function(data) {
     res.redirect("reviews")
@@ -243,6 +243,7 @@ app.post("/addReviewData", function(req,res) {
   }) 
   .catch(function(error) {
     res.render("pages/userpage", {
+      data:[],
       message: 'Review Failed to Add',
       error: true
     })
