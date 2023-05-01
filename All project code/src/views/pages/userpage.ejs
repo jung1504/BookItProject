@@ -2,49 +2,48 @@
 <%- include ('../partials/menu') %>
 
 <main>
-    <% if (locals.message) { %>
-        <div
-          class="alert alert-<%- locals.error ? 'danger' : 'success' %>"
-          role="alert">
-          <%= message %>
+    <div class="container">
+        <% if (locals.message) { %>
+            <div
+            class="alert alert-<%- locals.error ? 'danger' : 'success' %>"
+            role="alert">
+            <%= message %>
+            </div>
+            <% } %>
+        <div>
+        <!--Displaying Reviews-->
+        <table class="table">
+            <h1><centre>Your Reviews:</centre></h1>
+            <thead>
+                <th>Book Title</th>
+                <th>Book Author</th>
+                <th>Review Rating</th>
+            </thead>
+            <tbody>
+                <% data.forEach(review=> { %>
+                    <tr>
+                        <td>
+                            <%= review.title %>
+                        </td>
+                        <td>
+                            <%= review.author %>
+                        </td>
+                        <td>
+                            <%= review.rating %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Review:
+                        </th>
+                        <td colspan="3">
+                            <%= review.review %>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>    
+        </table>
         </div>
-        <% } %>
-    <div>
-        <!-- ***put profile info here*** -->
-    </div>
-    <div>
-    <!--Displaying Reviews-->
-    <table class="table">
-        <h1><centre>Your Reviews:</centre></h1>
-        <thead>
-            <th>Book Title</th>
-            <th>Book Author</th>
-            <th>Review Rating</th>
-        </thead>
-        <tbody>
-            <% data.forEach(review=> { %>
-                <tr>
-                    <td>
-                        <%= review.title %>
-                    </td>
-                    <td>
-                        <%= review.author %>
-                    </td>
-                    <td>
-                        <%= review.rating %>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        Review:
-                    </th>
-                    <td colspan="3">
-                        <%= review.review %>
-                    </td>
-                </tr>
-            <% }) %>
-        </tbody>    
-    </table>
     </div>
 </main>
 

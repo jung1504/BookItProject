@@ -23,6 +23,16 @@ CREATE TABLE reviews(
     FOREIGN KEY (email) REFERENCES users (email)
 );
 
+DROP TABLE IF EXISTS readingList CASCADE;
+CREATE TABLE readingList(
+    readingList_id SERIAL PRIMARY KEY NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    imageURL VARCHAR(200) NOT NULL,
+    author VARCHAR(50) NOT NULL,
+    FOREIGN KEY (email) REFERENCES users (email)
+);
+
 DROP TABLE IF EXISTS likedBooks CASCADE;
 CREATE TABLE likedBooks(
     liked_id SERIAL PRIMARY KEY NOT NULL,
