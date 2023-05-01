@@ -97,7 +97,7 @@
           <div>
             <button type="submit" class="btn btn-info">Add to Reading List</button>
             <input type="hidden" id="title" name="title" value="<%- books.results[0].title %>"/>
-            <input type="hidden" id="author" name="author" value="<%- books.results[0].author %>"/>
+            <input type="hidden" id="author" name="author" value="<%- books.results[0].authors[0].name %>"/>
             <input type="hidden" id="imageURL" name="imageURL" value="<%- books.results[0].formats['image/jpeg'] %>"/>
           </div>
         </form>

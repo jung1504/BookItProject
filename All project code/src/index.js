@@ -530,9 +530,6 @@ app.post("/readinglist", async(req, res) => {
   db.any(query, [email, title, imageURL, author])
   
   .then(function(data) {
-    // res.redirect("readinglist", {
-    //   message: 'Book successfully added to reading list'
-    // });
 
     res.redirect('readinglist')
   })
@@ -543,6 +540,19 @@ app.post("/readinglist", async(req, res) => {
   });
 
 })
+
+app.post("/deleteReadingList", function(req, res) {
+  const query = `DELETE FROM readingList WHERE title = $1 AND author = $2 AND email = $3;`;
+
+  db.none(query, [req.body.title, req.body.author, user.email])
+  .then(function(data){
+    res.redirect('readinglist');
+  })
+  .catch(function(error) {
+    res.render("pages/readinglist")
+  });
+
+});
 
 // app.get("/books", async (req, res) => {
 //   //console.log("test");
