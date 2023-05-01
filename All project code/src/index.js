@@ -238,9 +238,7 @@ app.post("/addReviewData", function(req,res) {
   db.any(query, [req.body.userReview, req.body.rating, req.body.id, user.email, req.body.title, req.body.author, req.body.imageURL])
   
   .then(function(data) {
-    res.render("pages/addedReview", {
-      message: 'Review Added Successfully'
-    });
+    res.redirect("/reviews");
   }) 
   .catch(function(error) {
     res.render("pages/userpage", {

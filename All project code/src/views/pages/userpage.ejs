@@ -11,6 +11,7 @@
             </div>
             <% } %>
         <div>
+        <% if (data && data.length > 0) { %>
         <!--Displaying Reviews-->
         <table class="table">
             <h1><centre>Your Reviews:</centre></h1>
@@ -43,6 +44,9 @@
                 <% }) %>
             </tbody>    
         </table>
+        <% } else { %>
+            <h1>You haven't posted any reviews yet!</h1>
+        <% } %>
         </div>
     </div>
 </main>
