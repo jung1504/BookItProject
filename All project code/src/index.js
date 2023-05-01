@@ -209,6 +209,30 @@ app.post("/addReview", (req, res) => {
   });
 });
 
+app.post("/addLikedBook", function(req, res) {
+  const query = `INSERT INTO likedBooks (email, title, imageURL, author) VALUES ($1, $2, $3, $4);`;
+  db.any(query, [user.email, req.body.title, req.body.imageURL, req.body.author])
+  .then(function(data) {
+    res.redirect("likedBooks"); 
+  })
+  .catch(function(error) {
+    res.render("pages/addedReview", {
+      message: 'Failed to add liked book'
+    })
+  });
+});
+
+app.post("/deleteLikedBook", function(req, res) {
+  const query = `DELETE FROM likedBooks WHERE title = $1 AND author = $2;`;
+  db.none(query, [req.body.title, req.body.author])
+  .then(function(data) {
+    res.redirect("likedBooks");
+  })
+  .catch(function(error) {
+    res.render("pages/addedReview")
+  });
+});
+
 app.post("/addReviewData", function(req,res) {
   const query = `INSERT INTO reviews (review, rating, id, email, title, author, upload_date) VALUES ($1, $2, $3, $4, $5, $6, '${today}');`;
   db.any(query, [req.body.userReview, req.body.rating, req.body.id, user.email, req.body.title, req.body.author])
@@ -245,6 +269,23 @@ app.get("/logout", (req, res) => {
   res.render("pages/login", {
     message: "Logged out successfully."
   });
+});
+
+app.get("/likedBooks", function(req, res) {
+  const query = `SELECT * FROM likedBooks WHERE email = $1;`;
+  db.any(query, [user.email])
+    .then(function(data) {
+      console.log(data);
+      res.render("pages/likedBooks", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/likedBooks", {
+        data: [],
+        error: true
+      })
+    });
 });
 
 // Render initial reviews page

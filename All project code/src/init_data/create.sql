@@ -24,5 +24,14 @@ CREATE TABLE readingList(
     title VARCHAR(200) NOT NULL,
     imageURL VARCHAR(200) NOT NULL,
     author VARCHAR(50) NOT NULL,
+);
+
+DROP TABLE IF EXISTS likedBooks CASCADE;
+CREATE TABLE likedBooks(
+    liked_id SERIAL PRIMARY KEY NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    title VARCHAR (100),
+    imageURL VARCHAR(200),
+    author VARCHAR(200),
     FOREIGN KEY (email) REFERENCES users (email)
 );
