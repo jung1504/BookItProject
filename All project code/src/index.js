@@ -249,6 +249,125 @@ app.post("/addReviewData", function(req,res) {
   });
 });
 
+
+
+
+app.get("/user", function(req, res) {
+
+  const query = `SELECT * FROM users WHERE email = $1`;
+  
+
+  db.any(query, user.email)
+    .then(function(data) {
+      res.render("pages/user", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/user", {
+        data: [],
+        error: true,
+        message: "Users render failed."
+      })
+    });
+});
+
+
+
+
+app.get('/changeProfile', (req,res) => {
+  res.render("pages/changeProfile");
+});
+
+
+
+app.post('/changeProfileUsername',  (req, res) => {
+  const query = "UPDATE users SET username = $1 WHERE email = $2";
+  db.any(query, [req.body.username, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+app.post('/changeProfileAge',  (req, res) => {
+  const query = "UPDATE users SET user_age = $1 WHERE email = $2";
+  db.any(query, [req.body.userAge, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+
+app.post('/changeProfileLocation',  (req, res) => {
+  const query = "UPDATE users SET user_location = $1 WHERE email = $2";
+  db.any(query, [req.body.userLocation, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+app.post('/changeProfileFavoriteBook',  (req, res) => {
+  const query = "UPDATE users SET favorite_book = $1 WHERE email = $2";
+  db.any(query, [req.body.favoriteBook, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+app.post('/changeProfileAbout',  (req, res) => {
+  const query = "UPDATE users SET about = $1 WHERE email = $2";
+  db.any(query, [req.body.about, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+
+
+
+
+
+
+
 // Authentication Middleware.
 const auth = (req, res, next) => {
   if (!req.session.user) {

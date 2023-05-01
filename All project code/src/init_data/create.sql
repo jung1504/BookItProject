@@ -1,7 +1,12 @@
 DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users(
     email VARCHAR(50) PRIMARY KEY,
-    password VARCHAR(60) NOT NULL
+    password VARCHAR(60) NOT NULL,
+    username VARCHAR(40),
+    user_age INT,
+    user_location VARCHAR(40),
+    favorite_book VARCHAR(40),
+    about VARCHAR(200)
 );
 
 DROP TABLE IF EXISTS reviews CASCADE;
