@@ -1,0 +1,84 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+
+
+    <% if (locals.message) { %>
+        <div
+          class="alert alert-<%- locals.error ? 'danger' : 'success' %>"
+          role="alert">
+          <%= message %>
+        </div>
+        <% } %>
+
+
+        <h1>Profile</h1>
+<body>
+  <div id="user" class="container">
+           
+
+
+                    <ul style = "list-style: none;" width >
+                        <div class="mb-3">
+                            <li>   
+                                Username: 
+                                <%= data[0].username %>
+                            </li>
+                        </div>
+                        <div class="mb-3">
+                            <li>
+                                Age: 
+                                <%= data[0].user_age %>
+                            </li>
+                        </div>
+                        <div class="mb-3">
+                            <li>
+                                Location:
+                                <%= data[0].user_location %>
+                            </li>
+                        </div>
+                        <div class="mb-3">
+                            <li>
+                                Favorite Book:
+                                <%= data[0].favorite_book %>
+                            </li>
+                        </div>
+                        <div class="mb-3">
+                            <li>
+                                About Me:
+                                <%= data[0].about %>
+                            </li>
+                        </div>
+                    </ul>   
+
+
+    <div class="mb-3">
+        <a href="/changeProfile">
+        <button type="submit" class="btn btn-primary">Edit Profile</button>
+    </div>
+</div>
+</body>
+
+
+
+
+<style>
+h1 { 
+    color: rgb(23, 167, 167);
+    text-align: left;
+    font-size: 50px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+body { 
+    background-color: rgb(46, 44, 44);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color:  rgb(23, 167, 167);
+}
+</style>
+
+</main>
+
+<%- include ('../partials/footer') %>
+

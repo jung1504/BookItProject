@@ -1,0 +1,76 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+    <% if (locals.message) { %>
+        <div
+          class="alert alert-<%- locals.error ? 'danger' : 'success' %>"
+          role="alert">
+          <%= message %>
+        </div>
+        <% } %>
+
+
+<div id="changeProfile" class="container">
+
+    <h1><centre>Profile</centre></h1>
+
+    <form action="/changeProfileUsername" method="POST">
+      
+        <div class="mb-3">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" />
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save Username</button>
+        </div>
+    </form>  
+
+    <form action="/changeProfileAge" method="POST">    
+        <div class="mb-3">
+            <label for="userAge">Age:</label>
+            <input type="text" id="userAge" name="userAge"/>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save Age</button>
+        </div>
+    </form>
+
+    <form action="/changeProfileLocation" method="POST">
+        <div class="mb-3">
+            <label for="userLocation">Location:</label>
+            <input type="text" id="userLocation" name="userLocation"/>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save Location</button>
+        </div>
+    </form>
+
+    <form action="/changeProfileFavoriteBook" method="POST">    
+        <div class="mb-3">
+            <label for="favorite_book">Favorite Book:</label>
+            <input type="text" id="favoriteBook" name="favoriteBook"/>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save Favorite Book</button>
+        </div>
+
+    </form>
+
+    <form action="/changeProfileAbout" method="POST">
+        <div class="mb-3">
+            <label for="about">About Me:</label>
+            <input type="text" id="about" name="about"/>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save About Me</button>
+        </div>
+    </form>
+</div>
+
+</main>

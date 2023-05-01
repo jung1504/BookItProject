@@ -223,8 +223,8 @@ app.post("/addLikedBook", function(req, res) {
 });
 
 app.post("/deleteLikedBook", function(req, res) {
-  const query = `DELETE FROM likedBooks WHERE title = $1 AND author = $2;`;
-  db.none(query, [req.body.title, req.body.author])
+  const query = `DELETE FROM likedBooks WHERE title = $1 AND author = $2 AND email = $3;`;
+  db.none(query, [req.body.title, req.body.author, user.email])
   .then(function(data) {
     res.redirect("likedBooks");
   })
@@ -234,8 +234,8 @@ app.post("/deleteLikedBook", function(req, res) {
 });
 
 app.post("/addReviewData", function(req,res) {
-  const query = `INSERT INTO reviews (review, rating, id, email, title, author, upload_date) VALUES ($1, $2, $3, $4, $5, $6, '${today}');`;
-  db.any(query, [req.body.userReview, req.body.rating, req.body.id, user.email, req.body.title, req.body.author])
+  const query = `INSERT INTO reviews (review, rating, id, email, title, author, upload_date, imageurl) VALUES ($1, $2, $3, $4, $5, $6, '${today}', $7);`;
+  db.any(query, [req.body.userReview, req.body.rating, req.body.id, user.email, req.body.title, req.body.author, req.body.imageURL])
   
   .then(function(data) {
     res.render("pages/addedReview", {
@@ -243,11 +243,132 @@ app.post("/addReviewData", function(req,res) {
     });
   }) 
   .catch(function(error) {
-    res.render("pages/addedReview", {
-      message: 'Review Failed to Add'
+    res.render("pages/userpage", {
+      data:[],
+      message: 'Review Failed to Add',
+      error: true
     })
   });
 });
+
+
+
+
+app.get("/user", function(req, res) {
+
+  const query = `SELECT * FROM users WHERE email = $1`;
+  
+
+  db.any(query, user.email)
+    .then(function(data) {
+      res.render("pages/user", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/user", {
+        data: [],
+        error: true,
+        message: "Users render failed."
+      })
+    });
+});
+
+
+
+
+app.get('/changeProfile', (req,res) => {
+  res.render("pages/changeProfile");
+});
+
+
+
+app.post('/changeProfileUsername',  (req, res) => {
+  const query = "UPDATE users SET username = $1 WHERE email = $2";
+  db.any(query, [req.body.username, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+app.post('/changeProfileAge',  (req, res) => {
+  const query = "UPDATE users SET user_age = $1 WHERE email = $2";
+  db.any(query, [req.body.userAge, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+
+app.post('/changeProfileLocation',  (req, res) => {
+  const query = "UPDATE users SET user_location = $1 WHERE email = $2";
+  db.any(query, [req.body.userLocation, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+app.post('/changeProfileFavoriteBook',  (req, res) => {
+  const query = "UPDATE users SET favorite_book = $1 WHERE email = $2";
+  db.any(query, [req.body.favoriteBook, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+app.post('/changeProfileAbout',  (req, res) => {
+  const query = "UPDATE users SET about = $1 WHERE email = $2";
+  db.any(query, [req.body.about, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+
+
+
+
+
+
 
 // Authentication Middleware.
 const auth = (req, res, next) => {
