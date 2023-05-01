@@ -209,6 +209,30 @@ app.post("/addReview", (req, res) => {
   });
 });
 
+app.post("/addLikedBook", function(req, res) {
+  const query = `INSERT INTO likedBooks (email, title, imageURL, author) VALUES ($1, $2, $3, $4);`;
+  db.any(query, [user.email, req.body.title, req.body.imageURL, req.body.author])
+  .then(function(data) {
+    res.redirect("likedBooks"); 
+  })
+  .catch(function(error) {
+    res.render("pages/addedReview", {
+      message: 'Failed to add liked book'
+    })
+  });
+});
+
+app.post("/deleteLikedBook", function(req, res) {
+  const query = `DELETE FROM likedBooks WHERE title = $1 AND author = $2 AND email = $3;`;
+  db.none(query, [req.body.title, req.body.author, user.email])
+  .then(function(data) {
+    res.redirect("likedBooks");
+  })
+  .catch(function(error) {
+    res.render("pages/addedReview")
+  });
+});
+
 app.post("/addReviewData", function(req,res) {
   const query = `INSERT INTO reviews (review, rating, id, email, title, author, upload_date, imageurl) VALUES ($1, $2, $3, $4, $5, $6, '${today}', $7);`;
   db.any(query, [req.body.userReview, req.body.rating, req.body.id, user.email, req.body.title, req.body.author, req.body.imageURL])
@@ -225,6 +249,125 @@ app.post("/addReviewData", function(req,res) {
     })
   });
 });
+
+
+
+
+app.get("/user", function(req, res) {
+
+  const query = `SELECT * FROM users WHERE email = $1`;
+  
+
+  db.any(query, user.email)
+    .then(function(data) {
+      res.render("pages/user", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/user", {
+        data: [],
+        error: true,
+        message: "Users render failed."
+      })
+    });
+});
+
+
+
+
+app.get('/changeProfile', (req,res) => {
+  res.render("pages/changeProfile");
+});
+
+
+
+app.post('/changeProfileUsername',  (req, res) => {
+  const query = "UPDATE users SET username = $1 WHERE email = $2";
+  db.any(query, [req.body.username, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+app.post('/changeProfileAge',  (req, res) => {
+  const query = "UPDATE users SET user_age = $1 WHERE email = $2";
+  db.any(query, [req.body.userAge, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+
+app.post('/changeProfileLocation',  (req, res) => {
+  const query = "UPDATE users SET user_location = $1 WHERE email = $2";
+  db.any(query, [req.body.userLocation, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+app.post('/changeProfileFavoriteBook',  (req, res) => {
+  const query = "UPDATE users SET favorite_book = $1 WHERE email = $2";
+  db.any(query, [req.body.favoriteBook, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+app.post('/changeProfileAbout',  (req, res) => {
+  const query = "UPDATE users SET about = $1 WHERE email = $2";
+  db.any(query, [req.body.about, user.email])
+  .then((data) => {
+    res.render("pages/changeProfile", {
+    message: 'Profile Saved'
+  });
+  })
+  .catch((err) => {
+    res.render("pages/changeProfile", {
+    message: 'Error Saving Profile'
+       })
+  });
+});
+
+
+
+
+
+
+
+
 
 // Authentication Middleware.
 const auth = (req, res, next) => {
@@ -246,6 +389,23 @@ app.get("/logout", (req, res) => {
   res.render("pages/login", {
     message: "Logged out successfully."
   });
+});
+
+app.get("/likedBooks", function(req, res) {
+  const query = `SELECT * FROM likedBooks WHERE email = $1;`;
+  db.any(query, [user.email])
+    .then(function(data) {
+      console.log(data);
+      res.render("pages/likedBooks", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/likedBooks", {
+        data: [],
+        error: true
+      })
+    });
 });
 
 // Render initial reviews page
