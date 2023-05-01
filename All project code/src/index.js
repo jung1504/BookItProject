@@ -238,8 +238,9 @@ app.post("/addReviewData", function(req,res) {
   db.any(query, [req.body.userReview, req.body.rating, req.body.id, user.email, req.body.title, req.body.author, req.body.imageURL])
   
   .then(function(data) {
-    res.redirect("reviews")
-      
+    res.render("pages/addedReview", {
+      message: 'Review Added Successfully'
+    });
   }) 
   .catch(function(error) {
     res.render("pages/userpage", {
@@ -618,6 +619,62 @@ app.get("/userpage", function(req, res) {
 
 });
 
+app.get("/readinglist", function(req, res) {
+
+  var email = user.email;
+
+  const query = `SELECT * FROM readinglist WHERE email = '${email}';`;
+  
+  db.any(query)
+    .then(function(data) {
+      res.render("pages/readinglist", {
+        data
+      });
+    })
+    .catch(function(error) {
+      res.render("pages/readinglist", {
+        data: [],
+        error: true,
+        message: "reading list render failed"
+      })
+    });
+
+});
+
+app.post("/readinglist", async(req, res) => {
+  const title = req.body.title;
+  const imageURL = req.body.imageURL;
+  const author = req.body.author;
+  const email = user.email;
+
+  const query = `INSERT INTO readingList (email, title, imageURL, author) VALUES ($1, $2, $3, $4);`;
+  db.any(query, [email, title, imageURL, author])
+  
+  .then(function(data) {
+
+    res.redirect('readinglist')
+  })
+  .catch(function(error) {
+    res.redirect("readinglist", {
+      message: 'book failed to be added to reading list'
+    })
+  });
+
+})
+
+app.post("/deleteReadingList", function(req, res) {
+  const query = `DELETE FROM readingList WHERE title = $1 AND author = $2 AND email = $3;`;
+
+  db.none(query, [req.body.title, req.body.author, user.email])
+  .then(function(data){
+    res.redirect('readinglist');
+  })
+  .catch(function(error) {
+    res.render("pages/readinglist")
+  });
+
+});
+
 // app.get("/books", async (req, res) => {
 //   //console.log("test");
 //   const query = req.query.id;
@@ -675,7 +732,8 @@ app.get("/books", async (req, res) => {
     .catch(error => {
       // Handle errors
     });
-});
+  });
+
 
 
 async function getReviewsFromID(id) {

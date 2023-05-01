@@ -1,0 +1,43 @@
+<%- include ('../partials/header') %>
+<%- include ('../partials/menu') %>
+
+<main>
+    <div class="container">
+        <table class="table">
+            <h1><centre>My Reading list:</centre></h1>
+            <thead>
+                <th>Book Title</th>
+                <th>Book Author</th>
+                <th>Book Image</th>
+                <th></th>
+            </thead> 
+            <tbody>
+                <% data.forEach(book=> { %>
+
+                
+                <tr>
+                    <td><%= book.title %></td>
+                    <td><%= book.author %></td>
+                    <td> 
+                        <div>
+                            <img src="<%- book.imageurl %>"></img>
+                        </div>
+                    </td>
+                    <td>
+                        <form action="/deleteReadingList" method="POST">
+                            <div class="mb-3">
+                              <button type="submit" class="btn btn-info">Remove From Reading List</button>
+                              <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
+                              <input type="hidden" id="author" name="author" value="<%- book.author %>"/>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+
+        </table>
+    </div>
+</main>
+
+<%- include ('../partials/footer') %>
