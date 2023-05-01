@@ -223,8 +223,8 @@ app.post("/addLikedBook", function(req, res) {
 });
 
 app.post("/deleteLikedBook", function(req, res) {
-  const query = `DELETE FROM likedBooks WHERE title = $1 AND author = $2;`;
-  db.none(query, [req.body.title, req.body.author])
+  const query = `DELETE FROM likedBooks WHERE title = $1 AND author = $2 AND email = $3;`;
+  db.none(query, [req.body.title, req.body.author, user.email])
   .then(function(data) {
     res.redirect("likedBooks");
   })
