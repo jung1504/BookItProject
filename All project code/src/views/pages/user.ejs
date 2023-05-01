@@ -12,51 +12,57 @@
         </div>
         <% } %>
 
-
+<head>
         <h1>Profile</h1>
+        </head>
+
+
 <body>
   <div id="user" class="container">
            
 
-
+                <h2>
                     <ul style = "list-style: none;" width >
                         <div class="mb-3">
                             <li>   
-                                Username: 
+                                <b>Username:</b> &nbsp;
                                 <%= data[0].username %>
                             </li>
                         </div>
                         <div class="mb-3">
                             <li>
-                                Age: 
+                                <b>Age:</b> &nbsp; 
                                 <%= data[0].user_age %>
                             </li>
                         </div>
                         <div class="mb-3">
                             <li>
-                                Location:
+                                <b>Location:</b> &nbsp;
                                 <%= data[0].user_location %>
                             </li>
                         </div>
                         <div class="mb-3">
                             <li>
-                                Favorite Book:
+                                <b>Favorite Book:</b> &nbsp;
                                 <%= data[0].favorite_book %>
                             </li>
                         </div>
                         <div class="mb-3">
                             <li>
-                                About Me:
+                                <b>About Me:</b> &nbsp;
                                 <%= data[0].about %>
                             </li>
                         </div>
                     </ul>   
 
+                </h2>
 
-    <div class="mb-3">
-        <a href="/changeProfile">
-        <button type="submit" class="btn btn-primary">Edit Profile</button>
-    </div>
+                <p2>            
+                    <div class="mb-3">
+                        <a href="/changeProfile">
+                        <button type="submit" class="btn btn-primary" >Edit Profile</button>
+                    </div>
+                </p2>
 </div>
 </body>
 
@@ -65,17 +71,32 @@
 
 <style>
 h1 { 
-    color: rgb(23, 167, 167);
-    text-align: left;
+    color: rgb(29, 27, 27);
+    text-align: center;
     font-size: 50px;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 body { 
-    background-color: rgb(46, 44, 44);
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color:  rgb(23, 167, 167);
+    background-color: rgb(233, 229, 223);
 }
+
+
+p2 {
+    margin-right: 200px;
+    margin-left: 200px;
+    text-align: right;
+}
+
+h2 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color:  rgb(41, 27, 27);
+    width: px;
+    background-color: rgb(197, 184, 184);
+    border: 3px solid rgb(27, 24, 24);
+    font-size: 20px;
+}
+
 </style>
 
 </main>
