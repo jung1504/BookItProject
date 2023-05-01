@@ -27,7 +27,13 @@
                         </div>
                     </td>
                     <td>
-                        Temp: To be "remove liked book" form
+                        <form action="/deleteLikedBook" method="POST">
+                            <div class="mb-3">
+                              <button type="submit" class="btn btn-info">Remove Liked Book</button>
+                              <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
+                              <input type="hidden" id="author" name="author" value="<%- book.author %>"/>
+                            </div>
+                          </form>
                     </td>
                 </tr>
             <% }) %>
