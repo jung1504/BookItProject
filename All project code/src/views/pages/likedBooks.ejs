@@ -4,6 +4,7 @@
 <main>
     <div class="container">
     <!--Displaying Favorites-->
+    <% if (data && data.length > 0) { %>
     <table class="table">
         <h1><centre>Liked Books:</centre></h1>
         <thead>
@@ -39,6 +40,9 @@
             <% }) %>
         </tbody>    
     </table>
+    <% } else { %>
+        <h1>You haven't liked any books yet!</h1>
+    <% } %>
     </div>
 </main>
 
