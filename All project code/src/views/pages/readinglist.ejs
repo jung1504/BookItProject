@@ -3,6 +3,7 @@
 
 <main>
     <div class="container">
+        <% if (data && data.length > 0) { %>
         <table class="table">
             <h1><centre>My Reading list:</centre></h1>
             <thead>
@@ -37,6 +38,9 @@
             </tbody>
 
         </table>
+        <% } else { %>
+            <h1>You haven't added any books to your reading list yet!</h1>
+        <% } %>
     </div>
 </main>
 
