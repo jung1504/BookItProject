@@ -83,24 +83,7 @@
     <div class="container">
       <div class="image-container">
         <img src="<%- books.results[0].formats['image/jpeg'] %>" alt="book cover" style="height:500px; width:350px">
-        <form action="/addReview" method="POST">
-          <div class="mb-3">
-            <button type="submit" class="btn btn-info" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); margin: -35px 0;">Add Review</button>
-            <input type="hidden" id="id" name="id" value="<%- books.results[0].id %>"/>
-            <input type="hidden" id="title" name="title" value="<%- books.results[0].title %>"/>
-            <input type="hidden" id="author" name="author" value="<%- books.results[0].authors[0].name %>"/>
-            <input type="hidden" id="imageURL" name="imageURL" value="<%- books.results[0].formats['image/jpeg'] %>"/>
-          </div>
-        </form>
-
-        <form action="/readinglist" method="POST">
-          <div>
-            <button type="submit" class="btn btn-info">Add to Reading List</button>
-            <input type="hidden" id="title" name="title" value="<%- books.results[0].title %>"/>
-            <input type="hidden" id="author" name="author" value="<%- books.results[0].authors[0].name %>"/>
-            <input type="hidden" id="imageURL" name="imageURL" value="<%- books.results[0].formats['image/jpeg'] %>"/>
-          </div>
-        </form>
+        
       </div>
         <div class="text-and-description-container">
           <div class="text-container">
@@ -155,7 +138,14 @@
               <input type="hidden" id="imageURL" name="imageURL" value="<%- books.results[0].formats['image/jpeg'] %>"/>
             </div>
           </form>
-            
+          <form action="/readinglist" method="POST">
+            <div>
+              <button type="submit" class="btn btn-info">Add to Reading List</button>
+              <input type="hidden" id="title" name="title" value="<%- books.results[0].title %>"/>
+              <input type="hidden" id="author" name="author" value="<%- books.results[0].authors[0].name %>"/>
+              <input type="hidden" id="imageURL" name="imageURL" value="<%- books.results[0].formats['image/jpeg'] %>"/>
+            </div>
+          </form>
             </ul>
           </div>
         </div>
