@@ -209,6 +209,19 @@ app.post("/addReview", (req, res) => {
   });
 });
 
+app.post("/deleteReview", function(req, res) {
+  const query = `DELETE FROM reviews WHERE title = $1 AND author = $2 AND email = $3;`;
+
+  db.none(query, [req.body.title, req.body.author, user.email])
+  .then(function(data) {
+    res.redirect('userpage');
+  })
+  .catch(function(error) {
+    res.render('pages/userpage')
+  });
+
+});
+
 app.post("/addLikedBook", function(req, res) {
   const query = `INSERT INTO likedBooks (email, title, imageURL, author) VALUES ($1, $2, $3, $4);`;
   db.any(query, [user.email, req.body.title, req.body.imageURL, req.body.author])

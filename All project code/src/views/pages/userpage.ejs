@@ -19,6 +19,7 @@
                 <th>Book Title</th>
                 <th>Book Author</th>
                 <th>Review Rating</th>
+                <th><!-- empty spot for delete --></th>
             </thead>
             <tbody>
                 <% data.forEach(review=> { %>
@@ -31,6 +32,15 @@
                         </td>
                         <td>
                             <%= review.rating %>
+                        </td>
+                        <td>
+                            <form action="/deleteReview" method="POST">
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-info">Delete Review</button>
+                                    <input type="hidden" id="title" name="title" value="<%- review.title %>"/>
+                                    <input type="hidden" id="author" name="author" value="<%- review.author %>"/>
+                                </div>
+                            </form>
                         </td>
                     </tr>
                     <tr>
