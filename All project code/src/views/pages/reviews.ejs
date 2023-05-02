@@ -1,9 +1,54 @@
 <%- include ('../partials/header') %>
 <%- include ('../partials/menu') %>
 
+<style>
+     div.search {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color:  rgb(41, 27, 27);
+    background-color: rgb(197, 184, 184);
+    border: 3px solid rgb(27, 24, 24);
+    font-size: 20px;
+    text-align: left;
+  }
+
+    div.search{
+    margin:10px auto;
+    max-width: 700px;
+    padding: 20px 12px 10px 20px;
+  }
+
+  body { 
+    background-color: rgb(233, 229, 223);
+  }
+
+  #tablestyle {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+    #tablestyle td, #tablestyle th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    }
+
+    #tablestyle tr:nth-child(even){background-color: rgb(197, 184, 184);}
+
+    #tablestyle tr:hover {background-color: #ddd;}
+
+    #tablestyle th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color:rgb(197, 184, 184);
+    color: black;
+}
+</style>
+
 <main>
+    <body>
     <!--Search Reviews-->
-    <div class="container">
+    <div class="search">
         <!-- FORM CODE -->
         <h1><centre>Search Reviews:</centre></h1>
         <form action="/reviews" method="POST">
@@ -33,7 +78,7 @@
       </div>
     <div class="container">
     <!--Displaying Reviews-->
-    <table class="table">
+    <table class="table" id="tablestyle">
         <h1><centre>Reviews:</centre></h1>
         <thead>
             <th>Book Title</th>
@@ -74,6 +119,7 @@
     </table>
 
     </div>
+    </body>
 </main>
 
 <%- include ('../partials/footer') %>

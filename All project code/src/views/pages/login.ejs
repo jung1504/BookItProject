@@ -1,5 +1,21 @@
 <%- include ('../partials/header') %> 
 
+<style>
+  body {
+    margin:25px;
+    background-color: rgb(233, 229, 223);
+    }
+
+    div.login{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color:  rgb(41, 27, 27);
+    background-color: rgb(197, 184, 184);
+    border: 3px solid rgb(27, 24, 24);
+    font-size: 20px;
+    text-align: center;
+  
+    }
+</style>
 <main>
     <% if (locals.message) { %>
         <div
@@ -8,7 +24,32 @@
           <%= message %>
         </div>
         <% } %>
-  <div class="container">
+        <header>
+          <nav class="navbar navbar-expand-sm border-bottom">
+            <div class="container">
+              <button
+                class="navbar-toggler ms-auto"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbar-collapse"
+                aria-controls="navbar"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                  <li class="nav-item">
+                    <!-- TO-DO: For Discover, add a <a> tag with an attribute href to call the '/discover' API -->
+                      <a style="font-weight:bold; font-size: 30px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;" class="nav-link" href="/login">BookIt</a>
+                  </li>
+                </ul>
+                
+            </div>
+          </nav>
+         </header>
+        <body>
+  <div class="login">
     <!-- THE REST OF YOUR HTML CODE GOES HERE -->
         <!-- FORM CODE -->
         <h1><centre>Login</centre></h1>
@@ -29,13 +70,12 @@
         </form>
         <!-- END FORM CODE -->
     <!-- END ADDED HTML CODE -->
-  </div>
-  <div class="container">
+  
     <form action="/register" method="GET">
       <button type="submit" class="btn btn-secondary mt-3">Register Instead</button>
     </form>
   </div>
-
+</body>
 </main>
 
 <%- include ('../partials/footer') %>
