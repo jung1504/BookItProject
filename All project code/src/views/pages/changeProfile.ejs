@@ -11,15 +11,50 @@
         <% } %>
 
 
+<style>
+        h1 { 
+            color: rgb(29, 27, 27);
+            text-align: center;
+            font-size: 50px;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        
+        body { 
+            background-color: rgb(233, 229, 223);
+        }
+
+        p4{
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color:  rgb(41, 27, 27);
+            background-color: rgb(197, 184, 184);
+            font-size: 18px;
+            margin-right: 30px;
+            margin-bottom: 100px;
+            text-align: left;
+        }
+
+        h2 {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color:  rgb(41, 27, 27);
+            background-color: rgb(197, 184, 184);
+            border: 3px solid rgb(27, 24, 24);
+            font-size: 20px;
+            text-align: left;
+        }
+        
+</style>
+
+
+    <h1>Profile</h1>
+<body>
 <div id="changeProfile" class="container">
 
-    <h1><centre>Profile</centre></h1>
-
+<h2>
     <form action="/changeProfileUsername" method="POST">
       
         <div class="mb-3">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" />
+            <b><label for="username">Username:</label></b>
+            <input type="text" id="username" name="username" /></p4>
         </div>
 
         <div class="mb-3">
@@ -29,7 +64,7 @@
 
     <form action="/changeProfileAge" method="POST">    
         <div class="mb-3">
-            <label for="userAge">Age:</label>
+            <b><label for="userAge">Age:</label></b>
             <input type="text" id="userAge" name="userAge"/>
         </div>
 
@@ -40,7 +75,7 @@
 
     <form action="/changeProfileLocation" method="POST">
         <div class="mb-3">
-            <label for="userLocation">Location:</label>
+            <b><label for="userLocation">Location:</label></b>
             <input type="text" id="userLocation" name="userLocation"/>
         </div>
 
@@ -51,7 +86,7 @@
 
     <form action="/changeProfileFavoriteBook" method="POST">    
         <div class="mb-3">
-            <label for="favorite_book">Favorite Book:</label>
+            <b><label for="favorite_book">Favorite Book:</label></b>
             <input type="text" id="favoriteBook" name="favoriteBook"/>
         </div>
 
@@ -63,7 +98,7 @@
 
     <form action="/changeProfileAbout" method="POST">
         <div class="mb-3">
-            <label for="about">About Me:</label>
+            <b><label for="about">About Me:</label></b>
             <input type="text" id="about" name="about"/>
         </div>
 
@@ -71,6 +106,7 @@
             <button type="submit" class="btn btn-primary">Save About Me</button>
         </div>
     </form>
+    </h2>
 </div>
-
+</body>
 </main>

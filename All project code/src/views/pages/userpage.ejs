@@ -10,11 +10,54 @@
             <%= message %>
             </div>
             <% } %>
-        <div>
+    
+        <style> 
+        
+            h1 { 
+                color: rgb(29, 27, 27);
+                text-align: center;
+                font-size: 50px;
+                font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            }
+            body { 
+                background-color: rgb(233, 229, 223);
+            }
+            
+            #myreviewstable {
+              font-family: Arial, Helvetica, sans-serif;
+              border-collapse: collapse;
+              width: 100%;
+            }
+            
+            #myreviewstable td, #myreviewstable th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+            
+            #myreviewstable tr:nth-child(even){
+                background-color: rgb(197, 184, 184);
+            }
+            
+            #myreviewstable tr:hover {
+                background-color: #ddd;
+            }
+            
+            #myreviewstable th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color:rgb(197, 184, 184);
+                color: black;
+            }
+        </style>
+        
+        <h1><centre>Your Reviews</centre></h1>
+    <body>    
+    <div>
         <% if (data && data.length > 0) { %>
         <!--Displaying Reviews-->
-        <table class="table">
-            <h1><centre>Your Reviews:</centre></h1>
+        <table class="table" id = "myreviewstable">
+            
             <thead>
                 <th>Book Title</th>
                 <th>Book Author</th>
@@ -58,6 +101,7 @@
             <h1>You haven't posted any reviews yet!</h1>
         <% } %>
         </div>
+        </body>
     </div>
 </main>
 
