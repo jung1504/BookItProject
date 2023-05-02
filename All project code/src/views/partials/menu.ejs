@@ -1,4 +1,6 @@
 <header>
+  <div class="border" style="border: darkgray; background-color: darkgray;">
+    
     <nav class="navbar navbar-expand-sm border-bottom">
       <div class="container">
         <button
@@ -12,28 +14,33 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav-item">
+            <li class="nav-item">
+              <a style=" color: white; font-weight:bolder; font-size: 40px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; list-style: none;" class="nav-link" href="/home">BookIt</a>
+          </li>
+          </ul>
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
               <!-- TO-DO: For Discover, add a <a> tag with an attribute href to call the '/discover' API -->
-                <a class="nav-link" href="/home">Home</a>
+                <a style="color: white;" class="nav-link" href="/home">Home</a>
             </li>
             <li class="nav-item">
               <!-- TO-DO: For Discover, add a <a> tag with an attribute href to call the '/discover' API -->
-                <a class="nav-link" href="/reviews">Reviews</a>
+                <a style="color: white;"  class="nav-link" href="/reviews">Reviews</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/userpage">My Reviews</a>
+              <a style="color: white;" class="nav-link" href="/userpage">My Reviews</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/likedBooks">My Liked Books</a>
+              <a style="color: white;" class="nav-link" href="/likedBooks">My Liked Books</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/readinglist">My Reading List</a>
+              <a style="color: white;" class="nav-link" href="/readinglist">My Reading List</a>
             </li>
             <li>
-              <a class="nav-link" href="/user">My Profile</a>
+              <a style="color: white;" class="nav-link" href="/user">My Profile</a>
             </li>
-
+          
       <li class="nav-item">
         <form action="/searchRes" method="GET" class="row g-3 align-items-center">
           <div class="col-auto">
@@ -51,9 +58,10 @@
       </li>
           </ul>
           <div class="nav-item me-1">
-                <a class="nav-link" href="/logout">Logout</a>
+                <a style="color: white;" class="nav-link" href="/logout">Logout</a>
           </div>
         </div>
       </div>
     </nav>
+  </div>
    </header>

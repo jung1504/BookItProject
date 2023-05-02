@@ -251,7 +251,7 @@ app.post("/addReviewData", function(req,res) {
   db.any(query, [req.body.userReview, req.body.rating, req.body.id, user.email, req.body.title, req.body.author, req.body.imageURL])
   
   .then(function(data) {
-    res.redirect("/reviews");
+    res.redirect("/userpage");
   }) 
   .catch(function(error) {
     res.render("pages/userpage", {
