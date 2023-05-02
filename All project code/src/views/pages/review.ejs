@@ -1,6 +1,116 @@
 <%- include ('../partials/header') %>
 <%- include ('../partials/menu') %>
 
+<style>
+      h1 { 
+    color: rgb(29, 27, 27);
+    text-align: center;
+    font-size: 50px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+  body { 
+    background-color: rgb(233, 229, 223);
+  }
+  div.review {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color:  rgb(41, 27, 27);
+    background-color: rgb(197, 184, 184);
+    border: 3px solid rgb(27, 24, 24);
+    font-size: 20px;
+    text-align: left;
+  }
+
+    div.review{
+    margin:10px auto;
+    max-width: 700px;
+    padding: 20px 12px 10px 20px;
+  }
+  div.review label {
+    padding: 0;
+    display: block;
+    list-style: none;
+    margin: 10px 0 0 0;
+  }
+
+  div.info {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color:  rgb(41, 27, 27);
+    background-color: rgb(197, 184, 184);
+    border: 3px solid rgb(27, 24, 24);
+    font-size: 20px;
+    text-align: left;
+  }
+
+    div.info{
+    margin:10px auto;
+    max-width: 700px;
+    padding: 20px 12px 10px 20px;
+  }
+  div.info label {
+    padding: 0;
+    display: block;
+    list-style: none;
+    margin: 10px 0 0 0;
+  }
+  /* .form-style-1 label{
+    margin:0 0 3px 0;
+    padding:0px;
+    display:block;
+    font-weight: bold;
+  } */
+  /* div.review field-long {
+   width: 100%;
+  }
+  div.review field-textarea {
+   height: 100px;
+  } */
+    div.textarea input[type ="text"]{
+    width: 100%;
+    /* height: 200px; */
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #030303;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: vertical;
+  }
+
+    span.ref{
+    display: inline;
+    width: 60px;
+    height: 40px;
+    padding: 5px;
+    font-weight: bold;
+    }
+    span.ref2{
+    display: inline;
+    width: 60px;
+    height: 40px;
+    padding: 5px;
+    font-weight: bold;
+    }
+    span.ref3{
+    display: inline;
+    width: 60px;
+    height: 40px;
+    padding: 5px;
+    font-weight: bold;
+    }
+
+    span.none{
+      font-weight: 100;
+    }
+
+    div.info{
+      text-align: center;
+    }
+
+  
+
+  
+</style>
+
 <main>
   <% if (locals.message) { %>
     <div
@@ -10,25 +120,26 @@
       <%= message %>
     </div>
     <% } %>
-    <div class="container">
+    <div class="review">
         <h1>Add Your Review</h1>
     </div>
-  
-    <div id="review" class="container">
-        <h4><%= selectedBook.title %></h4>
-        <p><%= selectedBook.author %></p>
-        <p><%= selectedBook.id %></p>
-        <img src="<%- selectedBook.imageURL %>" alt="No image for this book">
+  <body>
+    
+    <div id="review" class="info">
+      <h4> <span class="ref"> Title: </span>  <span class="none"> <%= selectedBook.title %> </span></h4>
+       <h4><span class="ref2"> Author: <span class="none"> <%= selectedBook.author %></p> </span></h4>
+       <h4><span class="ref3"> Book Id: <span class="none"> <%= selectedBook.id %></p> </span></h4>
+        <img style= "border: 2px solid #030303; border-radius: 4px;" src="<%- selectedBook.imageURL %>" alt="No image for this book">
     </div>
 
-    <div id="review" class="container">
+    <div id="review" class="review">
         <form action="/addReviewData" method="POST">
           <input type="hidden" name="title" value="<%- selectedBook.title %>">
           <input type="hidden" name="author" value="<%- selectedBook.author %>">
           <input type="hidden" name="id" value="<%- selectedBook.id %>">
           <input type="hidden" name="imageURL" value="<%- selectedBook.imageURL %>">
           
-            <div class="mb-3">
+            <div class="textarea">
                 <label for="userReview">Your Review:</label>
                 <input type="text" id="userReview" name="userReview" />
             </div>
@@ -42,8 +153,8 @@
             </div>
         </form>
     </div>
-
-  <div class="container">
+  </body>
+  <div class="footer">
     <footer id="footer" class="text-center fixed-bottom bg-light">
       <div class="row">
       </div>
