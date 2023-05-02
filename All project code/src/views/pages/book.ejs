@@ -3,6 +3,11 @@
 
 <main>
     <style>
+      
+        body { 
+          background-color: rgb(233, 229, 223);
+        }
+
         .container {
           display: flex;
           align-items: flex-start;
@@ -73,6 +78,43 @@
         
         .book-details-item {
           margin: 10px 0;
+        }
+
+        #tablestyle {
+          font-family: Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+
+        #tablestyle td, #tablestyle th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+
+        #tablestyle tr:nth-child(even){background-color: rgb(197, 184, 184);}
+
+        #tablestyle tr:hover {background-color: #ddd;}
+
+        #tablestyle th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color:rgb(197, 184, 184);
+          color: black;
+        }
+
+        .review-text {
+          text-align: left;
+          align-self: flex-start;
+          margin: 0;
+          padding: 0;
+        }
+
+        .reviews {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          width: 100%;
         }
       </style>
 
@@ -158,8 +200,10 @@
       </div>
       
       <% if (reviews.length > 0) { %>
-      <table class="table">
-        <h1><centre>Reviews:</centre></h1>
+       
+      <div class="reviews">
+        <div class="review-text" style="padding-left: 75px;">
+          <h1>Reviews:</h1>
         <% let sum = 0 %>
         <% for (let i = 0; i < reviews.length; i++) { %>
           <% sum += Number(reviews[i].rating) %>
@@ -170,8 +214,11 @@
         <p style="margin: -10px 0;"><%=reviews.length %> Ratings</p>
         <p style="margin: 10px 0;">Average rating: <%= Math.round(averageRating * 10) / 10 %> / 10</p>
         
-        <div style="margin: 10px 0;"></div>
+        </div>
+
         
+        <div class="container" style="flex-direction: column;">
+          <table class="table" id="tablestyle">
         <thead>
             <th>Review Author</th>
             <th>Review Rating</th>
@@ -195,8 +242,10 @@
             <% }) %>
         </tbody>    
     </table>
+  </div>
+</div>
     <% } else { %>
-      <h1><centre>No Reviews Found.</centre></h1>
+      <h1 style="text-align: center;"><centre>No Reviews Found.</centre></h1>
     <% } %>
 
   <div class="container">
