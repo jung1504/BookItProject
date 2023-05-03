@@ -94,180 +94,71 @@
       </div>
     </div>
   
-    <div class="seperator">
-      <div id="books" class="bookshelf">
-        <div class="row">
-          <% books.slice(0, 4).forEach(book => { %>
+    <div id="books" class="container">
+      <div class="row">
+        <% books.forEach((book, index) => { %>
+          <% if (index > 0 && index % 4 === 0) { %> <!-- loops through all book results and displays their content, creating a new row after every 5th book-->
+            </div><div class="row">
+          <% } %>
+
             <div class="polaroid">
               <a href="/books?id=<%= book.id %>" style="color: black">
               <img src="<%- book.formats['image/jpeg'] %>" alt="book cover" style="height:400px; width:275px; margin-top: 15px;">
               <div class="container">
-                <h4><%= book.title %></h4>
-                <p><%= book.authors[0].name %></p>
+                <% if (book.title && book.title.length > 50) { %>
+                  <h4><%= book.title.slice(0, 50) + '...' %></h4> <!-- limits the displayed title to 50 chars -->
+                <% } else { %>
+                  <h4><%= book.title %></h4>
+                <% } %>
+                <% if (book.authors && book.authors.length > 0 && book.authors[0].name) { %>
+                  <p><%= book.authors[0].name %></p>
+                <% } else { %>
+                  <p>Author Unknown</p> <!--(for when no author is provided)-->
+                  <% } %>
                 <form action="/addReview" method="POST">
                   <div class="mb-3">
                     <button type="submit" class="btn btn-info">Add Review</button>
                     <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
                     <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
-                    <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
+                    <% if (book.authors && book.authors.length > 0 && book.authors[0].name) { %>
+                      <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
+                    <% } else { %>
+                      <input type="hidden" id="author" name="author" value="Author Unknown"/>
+                      <% } %>
                     <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
                   </div>
-                </form>
-                <form action="/addLikedBook" method="POST">
-                  <div class="mb-3">
-                    <button type="submit" class="btn btn-info">Add Liked Book</button>
-                    <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
-                    <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
+              </form>
+              <form action="/addLikedBook" method="POST">
+                <div class="mb-3">
+                  <button type="submit" class="btn btn-info">Add Liked Book</button>
+                  <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
+                  <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
+                  <% if (book.authors && book.authors.length > 0 && book.authors[0].name) { %>
                     <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
-                    <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
-                  </div>
-                </form>
-                <form action="/readinglist" method="POST">
-                  <div class="mb-3">
-                    <button type="submit" class="btn btn-info">Add to Reading List</button>
-                    <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
-                    <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
-                    <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
-                    <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
-                  </div>
-                </form>
+                  <% } else { %>
+                    <input type="hidden" id="author" name="author" value="Author Unknown"/>
+                    <% } %>
+                  <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
+                </div>
+            </form>
+            <form action="/readingList" method="POST">
+              <div class="mb-3">
+                <button type="submit" class="btn btn-info">Add to Reading List</button>
+                <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
+                <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
+                <% if (book.authors && book.authors.length > 0 && book.authors[0].name) { %>
+                  <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
+                <% } else { %>
+                  <input type="hidden" id="author" name="author" value="Author Unknown"/>
+                  <% } %>
+                <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
+              </div>
+          </form>
               </div>
             </a>
             </div>
         <% }) %>
-        </div>
       </div>
-
-      <div class="bookshelf">
-        <div class="row">
-          <% books.slice(5, 9).forEach(book => { %>
-            <div class="polaroid">
-              <a href="/books?id=<%= book.id %>" style="color: black">
-              <img src="<%- book.formats['image/jpeg'] %>" alt="book cover" style="height:400px; width:275px; margin-top: 15px;">
-              <div class="container">
-                <h4><%= book.title %></h4>
-                <p><%= book.authors[0].name %></p>
-                <form action="/addReview" method="POST">
-                  <div class="mb-3">
-                    <button type="submit" class="btn btn-info">Add Review</button>
-                    <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
-                    <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
-                    <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
-                    <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
-                  </div>
-              </form>
-              <form action="/addLikedBook" method="POST">
-                <div class="mb-3">
-                  <button type="submit" class="btn btn-info">Add Liked Book</button>
-                  <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
-                  <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
-                  <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
-                  <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
-                </div>
-              </form>
-              <form action="/readinglist" method="POST">
-                <div class="mb-3">
-                  <button type="submit" class="btn btn-info">Add to Reading List</button>
-                  <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
-                  <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
-                  <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
-                  <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
-                </div>
-              </form>
-              </div>
-            </a>
-            </div>
-        <% }) %>
-        </div>
-      </div>
-
-      <div class="bookshelf">
-        <div class="row">
-          <% books.slice(10, 14).forEach(book => { %>
-            <div class="polaroid">
-              <a href="/books?id=<%= book.id %>" style="color: black">
-              <img src="<%- book.formats['image/jpeg'] %>" alt="book cover" style="height:400px; width:275px; margin-top: 15px;">
-              <div class="container">
-                <h4><%= book.title %></h4>
-                <p><%= book.authors[0].name %></p>
-                <form action="/addReview" method="POST">
-                  <div class="mb-3">
-                    <button type="submit" class="btn btn-info">Add Review</button>
-                    <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
-                    <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
-                    <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
-                    <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
-                  </div>
-              </form>
-              <form action="/addLikedBook" method="POST">
-                <div class="mb-3">
-                  <button type="submit" class="btn btn-info">Add Liked Book</button>
-                  <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
-                  <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
-                  <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
-                  <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
-                </div>
-              </form>
-              <form action="/readinglist" method="POST">
-                <div class="mb-3">
-                  <button type="submit" class="btn btn-info">Add to Reading List</button>
-                  <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
-                  <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
-                  <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
-                  <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
-                </div>
-              </form>
-              </div>
-              </a>
-            </div>
-        <% }) %>
-        </div>
-      </div>
-
-      <div class="bookshelf">
-        <div class="row">
-          <% books.slice(15, 19).forEach(book => { %>
-            <div class="polaroid">
-              <a href="/books?id=<%= book.id %>" style="color: black">
-              <img src="<%- book.formats['image/jpeg'] %>" alt="book cover" style="height:400px; width:275px; margin-top: 15px;">
-              <div class="container">
-                <h4><%= book.title %></h4>
-                <p><%= book.authors[0].name %></p>
-                <form action="/addReview" method="POST">
-                  <div class="mb-3">
-                    <button type="submit" class="btn btn-info">Add Review</button>
-                    <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
-                    <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
-                    <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
-                    <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
-                  </div>
-              </form>
-              <form action="/addLikedBook" method="POST">
-                <div class="mb-3">
-                  <button type="submit" class="btn btn-info">Add Liked Book</button>
-                  <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
-                  <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
-                  <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
-                  <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
-                </div>
-              </form>
-              <form action="/readinglist" method="POST">
-                <div class="mb-3">
-                  <button type="submit" class="btn btn-info">Add to Reading List</button>
-                  <input type="hidden" id="id" name="id" value="<%- book.id %>"/>
-                  <input type="hidden" id="title" name="title" value="<%- book.title %>"/>
-                  <input type="hidden" id="author" name="author" value="<%- book.authors[0].name %>"/>
-                  <input type="hidden" id="imageURL" name="imageURL" value="<%- book.formats['image/jpeg'] %>"/>
-                </div>
-              </form>
-              </div>
-              </a>
-            </div>
-        <% }) %>
-        </div>
-      </div>
-
-    </div>
   
   <div class="container">
     <footer id="footer" class="text-center fixed-bottom bg-light">
